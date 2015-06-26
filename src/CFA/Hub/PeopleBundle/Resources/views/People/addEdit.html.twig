@@ -1,0 +1,67 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    People
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        <a href="{{ path('cfa_hub_people_index') }}">
+            All People
+        </a>
+        {% if person is defined %}
+            &raquo;
+            <a href="{{ path('cfa_hub_people_show', {'person': person.id}) }}">
+                {{ person }}
+            </a>
+        {% endif %}
+        &raquo;
+        {% if person is defined %}
+            Edit
+        {% else %}
+            Add
+        {% endif %}
+        Person
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-cfa">
+        <div class="panel-body">
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.firstName) }}
+                        {{ form_row(form.lastName) }}
+                        {{ form_row(form.username) }}
+                        {% if form.password is defined %}
+                            {{ form_row(form.password) }}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.phone) }}
+                        {{ form_row(form.birthday) }}
+                        {{ form_row(form.picture) }}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.position) }}
+                        {{ form_row(form.hireDate) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.roles) }}
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-cfa btn-lg">
+                        {{ icon('check') }}
+                        Save
+                    </button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

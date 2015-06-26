@@ -1,0 +1,82 @@
+{% extends 'CFAEventRegisterBundle:Shared:layout.html.twig' %}
+
+{% block page_title_header %}
+    Manage
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <ol class="breadcrumb-custom">
+        <li class="active">
+            Manage Event Register
+        </li>
+    </ol>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        /* row-click */
+        $('.js-row-click').on('click', function(){
+            window.location.href = $(this).attr('id');
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {# events #}
+        <div class="col-sm-6">
+            <div class="panel panel-default" style="min-height: 600px;">
+                <legend class="col-sm-12">
+                    <h3>
+                        <a href="{{ path('cfa_event_manage_event_add') }}" class="btn btn-success btn-sm pull-right">
+                            Add Event
+                        </a>
+                        Events
+                    </h3>
+                </legend>
+                <table class="table table-striped table-hover table-lg table-pointer">
+                    <thead>
+                        <th class="col-sm-6">Event</th>
+                        <th class="col-sm-3">Date</th>
+                        <th class="col-sm-3">Sales</th>
+                    </thead>
+                    {% for event in events %}
+                        <tr id="{{ path('cfa_event_manage_event_show', {'event': event.id}) }}" class="js-row-click">
+                            <td>{{ event }}</td>
+                            <td>{{ event.date|date('m-d-Y') }}</td>
+                            <td>${{ event.sales|number_format(2, '.', ',') }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+        {# menu items #}
+        <div class="col-sm-6">
+            <div class="panel panel-default" style="min-height: 600px;">
+                <legend class="col-sm-12">
+                    <h3>
+                        <a href="{{ path('cfa_event_manage_menu_add') }}" class="btn btn-success btn-sm pull-right">
+                            Add Item
+                        </a>
+                        Menu Items
+                    </h3>
+                </legend>
+                <table class="table table-striped table-hover table-lg table-pointer">
+                    <thead>
+                        <th class="col-sm-6">Item</th>
+                        <th class="col-sm-6">Price</th>
+                    </thead>
+                    {% for item in menu_items %}
+                        <tr id="{{ path('cfa_event_manage_menu_edit', {'menu': item.id}) }}" class="js-row-click">
+                            <td>{{ item }}</td>
+                            <td>${{ item.price }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

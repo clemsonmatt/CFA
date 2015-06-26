@@ -1,0 +1,199 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    People
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        <div class="pull-right">
+            <a href="#" class="btn btn-cfa-inverse btn-xs">
+                {{ icon('remove') }}
+                Remove
+            </a>
+        </div>
+        <a href="{{ path('cfa_hub_people_index') }}">
+            All People
+        </a>
+        &raquo;
+        {{ person }}
+    </div>
+{% endblock %}
+
+{% block page_info %}
+    <div class="row">
+        <div class="col-xs-3 col-sm-2 col-lg-2">
+            <br>
+            <div style="display: block;
+            width: 100px;
+            height: 100px;
+            background: #E6E7ED;
+            border-radius: 50px;
+            -webkit-border-radius: 50px;
+            background-image: url(
+                {% if person.imageLocation != null %}
+                    {{ asset(person.imageLocation) }}
+                {% else %}
+                    {{ person.imageLocation }}
+                {% endif %}
+            );
+            background-position:50% 50%;
+            background-repeat:no-repeat;
+            background-size: cover;" class="pull-right">
+            </div>
+        </div>
+        <div class="col-xs-9 col-sm-10 col-lg-10">
+            <h3>{{ person }}</h3>
+            <p class="light-grey">
+                <strong>{{ person.position }}</strong>
+                <br>
+                {{ icon('phone-square') }}
+                {{ person.phone }}
+                <br>
+                {{ icon('envelope-square') }}
+                {{ person.email }}
+            </p>
+        </div>
+    </div>
+    <br>
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-4">
+        {# bio #}
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                <div class="pull-right">
+                    <a href="{{ path('cfa_hub_people_edit', {'person': person.id}) }}" class="btn btn-default btn-sm">
+                        {{ icon('edit') }}
+                        Edit
+                    </a>
+                </div>
+                Bio
+            </div>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <td>{{ person }}</td>
+                </tr>
+                <tr>
+                    <th>Position</th>
+                    <td>{{ person.position }}</td>
+                </tr>
+                <tr>
+                    <th>Hire Date</th>
+                    <td>{{ person.hireDate|date('m/d/Y') }}</td>
+                </tr>
+                <tr>
+                    <th>Birthday</th>
+                    <td>{{ person.birthday|date('m/d/Y') }}</td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td>{{ person.phone }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ person.email }}</td>
+                </tr>
+            </table>
+        </div>
+
+        {# tasks #}
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                <div class="pull-right">
+                    <a href="#" class="btn btn-default btn-sm">
+                        {{ icon('plus') }}
+                        Add
+                    </a>
+                </div>
+                Tasks
+            </div>
+            {% if person.tasks|length > 0 %}
+                <ul class="list-group">
+                    {% for task in person.tasks %}
+                        <a href="#" class="list-group-item">
+                            {{ task.action }}
+                        </a>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="panel-body light-grey">
+                    {{ icon('ban') }}
+                    No Tasks
+                </div>
+            {% endif %}
+        </div>
+
+        {# performance #}
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                Performance
+            </div>
+            <div class="panel-body">
+                <div class="light-grey">
+                    {{ icon('ban') }}
+                    No reviews
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# schedule #}
+    <div class="col-lg-8">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                <div class="pull-right">
+                    <a href="#" class="btn btn-default btn-sm">
+                        {{ icon('edit') }}
+                        Edit
+                    </a>
+                </div>
+                Schedule
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="calendar hidden-print">
+                            <header>
+                                <h2 class="month"></h2>
+                                <a class="btn-prev fa fa-angle-left" href="#"></a> <a class="btn-next fa fa-angle-right" href="#"></a>
+                            </header>
+                            <table>
+                                <thead>
+                                    <tr>
+                                      <td>Sun</td>
+                                      <td>Mon</td>
+                                      <td>Tue</td>
+                                      <td>Wed</td>
+                                      <td>Thu</td>
+                                      <td>Fri</td>
+                                      <td>Sat</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{ calendar|raw }}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3>Availablity</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                Friday Morning
+                            </li>
+                            <li class="list-group-item">
+                                Tuseday Evening
+                            </li>
+                            <li class="list-group-item">
+                                Wednesday &mdash; Thrusday all day
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

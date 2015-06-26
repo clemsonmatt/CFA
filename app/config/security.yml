@@ -1,0 +1,46 @@
+security:
+    encoders:
+        CFA\Hub\SharedBundle\Entity\Person:
+            algorithm: bcrypt
+
+    role_hierarchy:
+        ROLE_CFA_MANAGE: ROLE_CFA
+        ROLE_CFA_ADMIN:  [ROLE_CFA, ROLE_CFA_MANAGE, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        administrators:
+            entity: { class: CFAHubSharedBundle:Person, property: username }
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        demo_login:
+            pattern:  ^/demo/secured/login$
+            security: false
+
+        demo_secured_area:
+            pattern:    ^/demo/secured/
+            form_login:
+                check_path: _demo_security_check
+                login_path: _demo_login
+            logout:
+                path:   _demo_logout
+                target: _demo
+
+        secured_area:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login_check
+            logout:
+                path:   /logout
+                target: /hub/dashboard
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forgot, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forgotPassword$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_CFA }

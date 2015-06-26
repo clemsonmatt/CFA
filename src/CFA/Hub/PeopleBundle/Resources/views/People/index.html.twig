@@ -1,0 +1,126 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    People
+{% endblock %}
+
+{% block content %}
+    {# tabs #}
+    <div class="col-sm-12">
+        {% if is_granted('ROLE_CFA_ADMIN') %}
+            <a href="{{ path('cfa_hub_people_add') }}" class="btn btn-cfa btn-sm pull-right">
+                {{ icon('plus') }}
+                Add Person
+            </a>
+        {% endif %}
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+            <li class="active">
+                <a href="#management" data-toggle="tab">
+                    Management
+                    <span class="badge">
+                        {{ management|length }}
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#team_members" data-toggle="tab">
+                    Team Members
+                    <span class="badge">
+                        {{ team_members|length }}
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    {# tables #}
+    <div class="col-sm-12 tab-content tab-panel">
+        <br>
+        {# management details #}
+        <div class="tab-pane active" id="management">
+            {% for person in management %}
+                <div class="row">
+                    <div class="col-xs-3 col-sm-2 col-lg-2">
+                        <br>
+                        <div style="display: block;
+                        width: 100px;
+                        height: 100px;
+                        background: #E6E7ED;
+                        border-radius: 50px;
+                        -webkit-border-radius: 50px;
+                        background-image: url(
+                            {% if person.imageLocation != null %}
+                                {{ asset(person.imageLocation) }}
+                            {% else %}
+                                {{ person.imageLocation }}
+                            {% endif %}
+                        );
+                        background-position:50% 50%;
+                        background-repeat:no-repeat;
+                        background-size: cover;" class="pull-right">
+                        </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-10 col-lg-10">
+                        <a href="{{ path('cfa_hub_people_show', {'person': person.id}) }}">
+                            <h3 class="dark-grey">{{ person }}</h3>
+                        </a>
+                        <p class="light-grey">
+                            <strong>{{ person.position }}</strong>
+                            <br>
+                            {{ icon('phone-square') }}
+                            {{ person.phone }}
+                            <br>
+                            {{ icon('envelope-square') }}
+                            {{ person.email }}
+                        </p>
+                    </div>
+                </div>
+                {% if not loop.last %}<hr>{% endif %}
+            {% endfor %}
+        </div>
+
+        {# team member details #}
+        <div class="tab-pane" id="team_members">
+            {% for person in team_members %}
+                <div class="row">
+                    <div class="col-xs-3 col-sm-2 col-lg-2">
+                        <br>
+                        <div style="display: block;
+                        width: 100px;
+                        height: 100px;
+                        background: #E6E7ED;
+                        border-radius: 50px;
+                        -webkit-border-radius: 50px;
+                        background-image: url(
+                            {% if person.imageLocation != null %}
+                                {{ asset(person.imageLocation) }}
+                            {% else %}
+                                {{ person.imageLocation }}
+                            {% endif %}
+                        );
+                        background-position:50% 50%;
+                        background-repeat:no-repeat;
+                        background-size: cover;" class="pull-right">
+                        </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-10 col-lg-10">
+                        <a href="{{ path('cfa_hub_people_show', {'person': person.id}) }}">
+                            <h3 class="dark-grey">{{ person }}</h3>
+                        </a>
+                        <p class="light-grey">
+                            <strong>{{ person.position }}</strong>
+                            <br>
+                            {{ icon('phone-square') }}
+                            {{ person.phone }}
+                            <br>
+                            {{ icon('envelope-square') }}
+                            {{ person.email }}
+                        </p>
+                    </div>
+                </div>
+                {% if not loop.last %}<hr>{% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+{% endblock %}

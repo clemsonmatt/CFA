@@ -1,0 +1,122 @@
+{% extends 'CFAEventRegisterBundle:Shared:layout.html.twig' %}
+
+{% block page_title_header %}
+    {{ event }}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <ol class="breadcrumb-custom">
+        <li>
+            <a href="{{ path('cfa_event_index') }}" style="color: #eee;">
+                All Events
+            </a>
+        </li>
+        <li style="color: #bbb;">
+            Register
+        </li>
+        <li class="active">
+            Checkout
+        </li>
+    </ol>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        '@CFAEventRegisterBundle/Resources/public/js/register.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <br>
+                <div style="min-height: 380px;">
+                    <table class="table table-striped table-lg">
+                        <thead>
+                            <th class="col-sm-6">Item Name</th>
+                            <th class="col-sm-2">Qty.</th>
+                            <th class="col-sm-4">Price</th>
+                        </thead>
+                        <tbody id="register-body">
+                            {% for item in transaction.items %}
+                                <tr>
+                                    <td>{{ item }}</td>
+                                    <td>1</td>
+                                    <td>{{ item.price|number_format(2, '.', ',') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <dl class="dl-horizontal pull-right" style="padding-right: 20px;">
+                            <dt>Subtotal</dt>
+                            <dd>${{ transaction.total|number_format(2, '.', ',') }}</dd>
+                            <dt>Tax</dt>
+                            <dd>$0.00</dd>
+                        </dl>
+                    </div>
+                    <div class="col-sm-12" style="margin-top: -25px; margin-bottom: -35px;">
+                        <h1 class="text-right" style="margin-bottom: 0px; padding-right: 10px;">
+                            ${{ transaction.total|number_format(2, '.', ',') }}
+                        </h1>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <hr>
+                    <a href="{{ path('cfa_event_discard', {'transaction': transaction.id}) }}" class="btn btn-danger">
+                        Discard
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <br>
+                {{ form_start(form) }}
+                    <div class="panel-body" style="min-height: 490px;">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h1>Total:</h1>
+                            </div>
+                            <div class="col-sm-8">
+                                <h1 id="transaction-total">${{ transaction.total|number_format(2, '.', ',') }}</h1>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h1>{{ form_label(form.moneyRecieved) }}:</h1>
+                            </div>
+                            <div class="col-sm-8">
+                                <p id="js-paid-error" class="cfa-red" style="display: none;">Enter only money amount</p>
+                                <h1>{{ form_widget(form.moneyRecieved, {'attr': {'class': 'input-lg'}}) }}</h1>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h1>Change:</h1>
+                            </div>
+                            <div class="col-sm-8">
+                                <h1 id="change-total">$--.--</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <hr>
+                        <button type="submit" class="btn btn-success">
+                            Complete
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+cfa_hub_people:
+    resource: "@CFAHubPeopleBundle/Controller/"
+    type:     annotation
+    prefix:   /hub
+
+login:
+    path:     /login
+    defaults: { _controller: CFAHubSecurityBundle:Security:login }
+
+login_check:
+    path: /login_check
+
+logout:
+    path:   /logout

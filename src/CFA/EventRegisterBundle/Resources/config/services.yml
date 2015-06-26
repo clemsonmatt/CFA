@@ -1,0 +1,19 @@
+parameters:
+
+services:
+    cfa.event.form.type.event:
+        class: CFA\EventRegisterBundle\Form\Type\EventType
+        tags:
+            - { name: form.type, alias: event }
+    cfa.event.form.type.menu:
+        class: CFA\EventRegisterBundle\Form\Type\MenuType
+        tags:
+            - { name: form.type, alias: menu }
+    cfa.event.form.type.menuItem:
+        class: CFA\EventRegisterBundle\Form\Type\MenuItemType
+        tags:
+            - { name: form.type, alias: menuItem }
+    cfa.event.form.type.transaction:
+        class: CFA\EventRegisterBundle\Form\Type\TransactionType
+        tags:
+            - { name: form.type, alias: transaction }

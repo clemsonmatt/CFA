@@ -1,0 +1,8 @@
+cfa_hub_shared:
+    resource: "@CFAHubSharedBundle/Resources/config/routing.yml"
+    schemes:  [http]
+
+cfa_event_register:
+    resource: "@CFAEventRegisterBundle/Controller/"
+    type:     annotation
+    prefix:   /

@@ -1,0 +1,32 @@
+{% extends 'CFAHubSecurityBundle:Security:layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row" style="margin-top: 5%;">
+            <div class="col-lg-8 col-lg-offset-2">
+                <center>
+                    <img src="{{ asset('bundles/cfahubshared/images/Chikin_is_Brain_Food_Cow_Chick-fil_A.jpg') }}" style="max-width: 100%;">
+                </center>
+
+                <div style="position: relative; margin-top: -52%; margin-left: 15%; background-color: inherit; max-width: 55%;">
+                    <form action="login_check" method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.message }}</div>
+                        {% else %}
+                            <div style="margin-top: 25px;"></div>
+                        {% endif %}
+
+                        <input type="text" class="form-control cfa-login-input" name="_username" value="{{ username }}" placeholder="Username" />
+
+                        <input type="password" class="form-control cfa-login-input" name="_password" placeholder="Password" />
+
+                        <button type="submit" class="btn cfa-login-button btn-block">
+                            {{ icon('sign-in') }}
+                            Login
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

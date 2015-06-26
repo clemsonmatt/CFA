@@ -1,0 +1,423 @@
+/*
+ * Custom css file
+ */
+
+.dark-grey {
+    color: #333333;
+}
+.medium-grey {
+    color: #999999;
+}
+.light-grey {
+    color: #cccccc;
+}
+.color-white {
+    color: #ffffff;
+}
+.color-red {
+    color: #A33;
+}
+.color-green {
+    color: #3A3;
+}
+.color-blue {
+    color: #33A;
+}
+.cfa-red {
+    color: #e5173f;
+}
+.cfa-brown {
+    color: #4f2c1d;
+}
+.cfa-grey {
+    color: #696158;
+}
+.cfa-red-dark {
+    color: #A4343A;
+}
+
+
+/* fonts */
+.font-fg {
+    font-family: 'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif;
+}
+.font-primary {
+    font-family: Verdana, Geneva, sans-serif
+}
+.font-secondary {
+    font-family: Georgia, serif
+}
+
+
+/* background colors */
+.cfa-background-red {
+    background-color: #e5173f;
+    width: 100%;
+    height: 100px;
+}
+.cfa-background-red-dark {
+    background-color: #A4343A;
+    width: 100%;
+    height: 100px;
+}
+.cfa-background-cream {
+    background-color: #fcf6cc;
+    width: 100%;
+    height: 100px;
+}
+.cfa-background-brown {
+    background-color: #4f2c1d;
+    width: 100%;
+    height: 100px;
+}
+.cfa-background-grey {
+    background-color: #696158;
+    width: 100%;
+    height: 100px;
+}
+.cfa-background-light-grey {
+    background-color: #999;
+    width: 100%;
+    height: 100px;
+}
+
+
+/* paddings */
+.options-btn {
+    padding-right: 15px;
+}
+
+
+/* breadcrumb */
+.breadcrumb-custom {
+  padding: 8px 0px;
+  list-style: none;
+  background-color: inherit;
+}
+.breadcrumb-custom > li {
+  display: inline-block;
+}
+.breadcrumb-custom > li + li:before {
+  padding: 0 5px;
+  color: #ccc;
+  content: "/\00a0";
+}
+.breadcrumb-custom > .active {
+  color: #bbb;
+}
+
+
+/* table */
+.table-lg {
+    height: 40px;
+    font-size: 18px;
+}
+.table-pointer {
+    cursor: pointer;
+}
+
+
+/* navbar */
+.navbar {
+    border-bottom: 0px;
+}
+.navbar a {
+    color: #fff;
+}
+.navbar li .active {
+    background-color: #bd0010;
+}
+.navbar li a:hover {
+    background-color: #bd0010;
+}
+.dropdown-menu li a:hover {
+    background-color: #fff;
+}
+
+.navbar-default > .sidebar-nav > ul li a:hover {
+    background-color: #ddd;
+}
+
+
+/* custom navbar inverse */
+.navbar-inverse {
+    background-color: #e5173f
+}
+.navbar-inverse .navbar-nav>.active>a:hover,
+.navbar-inverse .navbar-nav>li>a:hover,
+.navbar-inverse .navbar-nav>li>a:focus {
+    background-color: #bd0010
+}
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.open>a,
+.navbar-inverse .navbar-nav>.open>a,
+.navbar-inverse .navbar-nav>.open>a:hover,
+.navbar-inverse .navbar-nav>.open>a,
+.navbar-inverse .navbar-nav>.open>a:hover,
+.navbar-inverse .navbar-nav>.open>a:focus {
+    background-color: #bd0010
+}
+.dropdown-menu {
+    background-color: #FFFFFF
+}
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-color: #bd0010
+}
+.navbar-inverse {
+    background-image: none;
+}
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-image: none;
+}
+.navbar-inverse {
+    border-color: #e5173f
+}
+.navbar-inverse .navbar-brand {
+    color: #FFFFFF
+}
+.navbar-inverse .navbar-brand:hover {
+    color: #FFFFFF
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: #FFFFFF
+}
+.navbar-inverse .navbar-nav>li>a:hover,
+.navbar-inverse .navbar-nav>li>a:focus {
+    color: #FFFFFF
+}
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.open>a,
+.navbar-inverse .navbar-nav>.open>a:hover,
+.navbar-inverse .navbar-nav>.open>a:focus {
+    color: #FFFFFF
+}
+.navbar-inverse .navbar-nav>.active>a:hover,
+.navbar-inverse .navbar-nav>.active>a:focus {
+    color: #FFFFFF
+}
+.dropdown-menu>li>a {
+    color: #333333
+}
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    color: #FFFFFF
+}
+.navbar-inverse .navbar-nav>.dropdown>a .caret {
+    border-top-color: #FFFFFF
+}
+.navbar-inverse .navbar-nav>.dropdown>a:hover .caret {
+    border-top-color: #FFFFFF
+}
+.navbar-inverse .navbar-nav>.dropdown>a .caret {
+    border-bottom-color: #FFFFFF
+}
+.navbar-inverse .navbar-nav>.dropdown>a:hover .caret {
+    border-bottom-color: #FFFFFF
+}
+
+
+/* custom navbar primary */
+.navbar-primary {
+    background-color: #fff
+}
+.navbar-primary .navbar-nav>.active>a:hover,
+.navbar-primary .navbar-nav>li>a:hover,
+.navbar-primary .navbar-nav>li>a:focus {
+    background-color: #efefef
+}
+.navbar-primary .navbar-nav>.active>a,
+.navbar-primary .navbar-nav>.open>a,
+.navbar-primary .navbar-nav>.open>a,
+.navbar-primary .navbar-nav>.open>a:hover,
+.navbar-primary .navbar-nav>.open>a,
+.navbar-primary .navbar-nav>.open>a:hover,
+.navbar-primary .navbar-nav>.open>a:focus {
+    background-color: #efefef
+}
+.dropdown-menu {
+    background-color: #FFFFFF
+}
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-color: #efefef
+}
+.navbar-primary {
+    background-image: none;
+}
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    background-image: none;
+}
+.navbar-primary {
+    border-color: #fff
+}
+.navbar-primary .navbar-brand {
+    color: #e5173f
+}
+.navbar-primary .navbar-brand:hover {
+    color: #e5173f
+}
+.navbar-primary .navbar-nav>li>a {
+    color: #e5173f
+}
+.navbar-primary .navbar-nav>li>a:hover,
+.navbar-primary .navbar-nav>li>a:focus {
+    color: #e5173f
+}
+.navbar-primary .navbar-nav>.active>a,
+.navbar-primary .navbar-nav>.open>a,
+.navbar-primary .navbar-nav>.open>a:hover,
+.navbar-primary .navbar-nav>.open>a:focus {
+    color: #e5173f
+}
+.navbar-primary .navbar-nav>.active>a:hover,
+.navbar-primary .navbar-nav>.active>a:focus {
+    color: #e5173f
+}
+.dropdown-menu>li>a {
+    color: #333333
+}
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:focus {
+    color: #e5173f;
+}
+.navbar-primary .navbar-nav>.dropdown>a .caret {
+    border-top-color: #e5173f
+}
+.navbar-primary .navbar-nav>.dropdown>a:hover .caret {
+    border-top-color: #e5173f
+}
+.navbar-primary .navbar-nav>.dropdown>a .caret {
+    border-bottom-color: #e5173f
+}
+.navbar-primary .navbar-nav>.dropdown>a:hover .caret {
+    border-bottom-color: #e5173f
+}
+
+
+/* custom buttons */
+.btn-cfa {
+    background-color: #e5173f;
+    color: #fff;
+}
+.btn-cfa:hover {
+    background-color: #bd0010;
+    color: #fff;
+}
+
+.btn-cfa-clear {
+    background-color: inherit;
+    color: #fff;
+    border-color: #fff;
+}
+.btn-cfa-clear:hover {
+    background-color: #fff;
+    color: #e5173f;
+    border-color: #fff;
+}
+
+
+/* panel */
+.panel-heading-grey {
+    background-color: #696158 !important;
+    color: #fff !important;
+}
+.panel-red {
+    border-color: #e5173f;
+}
+.panel-red > .panel-heading {
+    background-color: #e5173f;
+}
+.panel-green {
+    border-color: #71A241;
+}
+.panel-green > .panel-heading {
+    background-color: #71A241;
+}
+.panel-dark {
+    border-color: #404554;
+}
+.panel-dark > .panel-heading {
+    background-color: #404554;
+    color: #fff;
+}
+
+
+
+/* login screen */
+.form-signin .form-control
+{
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus
+{
+    z-index: 2;
+}
+.form-signin input[type="text"]
+{
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"]
+{
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+
+
+
+
+.navbar-nav > li > a {
+    padding-top:10px !important;
+    padding-bottom:10px !important;
+}
+.navbar {
+    min-height:40px !important
+}
+.navbar-brand {
+    padding: 10px 10px;
+    height: 40px;
+}
+.navbar-top-links li a {
+    padding: 10px;
+    min-height: 40px;
+}
+
+.sidebar-nav {
+    color: #777;
+
+    a {
+        color: #777;
+    }
+}
+.sidebar .menu_level_1 li,
+.sidebar .menu_level_2 li {
+    border-bottom: 0!important;
+}
+
+.sidebar .menu_level_1 li a {
+    padding-left: 37px;
+}
+
+.sidebar .menu_level_2 li a {
+    padding-left: 52px;
+}
+
+.sidebar ul li.active {
+    background-color: #eee;
+}
+.sidebar ul li.divider {
+    border-bottom: 0;
+}
+

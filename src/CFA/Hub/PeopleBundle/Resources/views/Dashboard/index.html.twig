@@ -1,0 +1,411 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-cfa">
+                    <div class="panel-heading">
+                        My Notifications
+                    </div>
+                    <table class="table table-hover">
+                        <tr>
+                            <td>Schedule Updated</td>
+                        </tr>
+                        <tr>
+                            <td>Schedule Request Approved</td>
+                        </tr>
+                        <tr>
+                            <td>Performance Review Rating</td>
+                        </tr>
+                        <tr>
+                            <td>New Task</td>
+                        </tr>
+                        <tr>
+                            <td>New Task</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-cfa">
+                    <div class="panel-heading">
+                        My Tasks
+                    </div>
+                    <table class="table table-hover">
+                        <tr>
+                            <td>Schedule Updated</td>
+                        </tr>
+                        <tr>
+                            <td>Schedule Request Approved</td>
+                        </tr>
+                        <tr>
+                            <td>Performance Review Rating</td>
+                        </tr>
+                        <tr>
+                            <td>New Task</td>
+                        </tr>
+                        <tr>
+                            <td>New Task</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% if is_granted('ROLE_CFA_ADMIN') %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-cfa">
+                        <div class="panel-heading">
+                            Unfinished Tasks
+                        </div>
+                        <table class="table table-hover">
+                            {% for task in unfinished_tasks %}
+                                <tr>
+                                    <td>{{ task.action }}</td>
+                                    <td>{{ task.person }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-cfa">
+                    <div class="panel-heading">
+                        CEM Scores
+                    </div>
+                    <div class="panel-body">
+                        {# 1st row cem #}
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="panel panel-cfa">
+                                    <div class="panel-heading" style="font-size: 14px; line-height: 3; color: #333;">
+                                        Be "REMARK"able
+                                    </div>
+                                    <div class="panel-body" style="padding: 0px;">
+                                        <center>
+                                            <h1>
+                                                <span class="cfa-red" style="margin-bottom: 15px;">
+                                                    {{ icon('arrow-down') }}
+                                                    73%
+                                                </span>
+                                            </h1>
+                                            <h4>Goal: 75%</h4>
+                                        </center>
+                                    </div>
+                                    <div class="panel-footer">
+                                        More Info
+                                        {{ icon('chevron-right') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="panel panel-cfa">
+                                    <div class="panel-heading" style="font-size: 14px; line-height: 3; color: #333;">
+                                        Overall Satisfaction
+                                    </div>
+                                    <div class="panel-body" style="padding: 0px;">
+                                        <center>
+                                            <h1>
+                                                <span class="color-green">
+                                                    {{ icon('arrow-up') }}
+                                                    80%
+                                                </span>
+                                            </h1>
+                                            <h4>Goal: 79%</h4>
+                                        </center>
+                                    </div>
+                                    <div class="panel-footer">
+                                        More Info
+                                        {{ icon('chevron-right') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="panel panel-cfa">
+                                    <div class="panel-heading" style="font-size: 14px; line-height: 3; color: #333;">
+                                        Execute OE
+                                    </div>
+                                    <div class="panel-body" style="padding: 0px;">
+                                        <center>
+                                            <h1>
+                                                <span class="cfa-red">
+                                                    {{ icon('arrow-down') }}
+                                                    52%
+                                                </span>
+                                            </h1>
+                                            <h4>Goal: 64%</h4>
+                                        </center>
+                                    </div>
+                                    <div class="panel-footer">
+                                        More Info
+                                        {{ icon('chevron-right') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {# 2nd row cem #}
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="panel panel-cfa">
+                                    <div class="panel-heading" style="font-size: 14px; line-height: 3; color: #333;">
+                                        Deliver 2MS
+                                    </div>
+                                    <div class="panel-body" style="padding: 0px;">
+                                        <center>
+                                            <h1>
+                                                <span class="cfa-red" style="margin-bottom: 15px;">
+                                                    {{ icon('arrow-down') }}
+                                                    63%
+                                                </span>
+                                            </h1>
+                                            <h4>Goal: 68%</h4>
+                                        </center>
+                                    </div>
+                                    <div class="panel-footer">
+                                        More Info
+                                        {{ icon('chevron-right') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="panel panel-cfa">
+                                    <div class="panel-heading" style="font-size: 14px; line-height: 3; color: #333;">
+                                        Active ECM
+                                    </div>
+                                    <div class="panel-body" style="padding: 0px;">
+                                        <center>
+                                            <h1>
+                                                <span class="color-green">
+                                                    {{ icon('arrow-up') }}
+                                                    70%
+                                                </span>
+                                            </h1>
+                                            <h4>Goal: 61%</h4>
+                                        </center>
+                                    </div>
+                                    <div class="panel-footer">
+                                        More Info
+                                        {{ icon('chevron-right') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="panel panel-cfa">
+                                    <div class="panel-heading" style="font-size: 14px; line-height: 3; color: #333;">
+                                        Order Accuracy
+                                    </div>
+                                    <div class="panel-body" style="padding: 0px;">
+                                        <center>
+                                            <h1>
+                                                <span class="color-green">
+                                                    {{ icon('arrow-up') }}
+                                                    98%
+                                                </span>
+                                            </h1>
+                                            <h4>Goal: 98%</h4>
+                                        </center>
+                                    </div>
+                                    <div class="panel-footer">
+                                        More Info
+                                        {{ icon('chevron-right') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# weekly focus and kudos #}
+        <div class="row">
+            {# weekly focus #}
+            <div class="col-lg-6">
+                <div class="panel panel-cfa">
+                    <div class="panel-heading">
+                        Weekly Focus
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                Front Counter
+                            </h4>
+                            <div class="list-group-item-text">
+                                Communicate with guests waiting when multi-tasking
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                Kitchen
+                            </h4>
+                            <div class="list-group-item-text">
+                                Increase portion size of chicken (Starts with fileting properly)
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                Drive-Thru
+                            </h4>
+                            <div class="list-group-item-text">
+                                Work together as a team to ensure drive through efficiency
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {# kudos #}
+            <div class="col-lg-6">
+                <div class="panel panel-cfa">
+                    <div class="panel-heading">
+                        Kudos To...
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                Courtney Dickerson
+                            </h4>
+                            <div class="list-group-item-text">
+                                Excellent leadership in the kitchen, and continued to set a standard for cleanliness in the kitchen.
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                Jennifer Mast
+                            </h4>
+                            <div class="list-group-item-text">
+                                Amazing job being the anchor position on FC. She made sure guests were recognized and welcomed right away.
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                Brenda Zane
+                            </h4>
+                            <div class="list-group-item-text">
+                                Great understanding of our guests REMARKABLE experience is MOST IMPORTANT. She is always looking to help others make this happen.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# schedule #}
+    <div class="col-lg-4">
+        <div class="panel panel-cfa">
+            <div class="panel-body panel-body-red">
+                <center>
+                    <p style="font-size: 18px;">{{ 'now'|date('l') }}</p>
+                    <br>
+                    <p style="font-size: 100px; margin-top: -50px; margin-bottom: -40px;">{{ 'now'|date('d') }}</p>
+                    <br>
+                    <p style="font-size: 18px;">{{ 'now'|date('F, Y') }}</p>
+                    <br>
+                    <button class="btn btn-cfa-clear">
+                        Shift Change Requests
+                        <i class="badge" style="background-color: #fff; color: #e5173f;">3</i>
+                    </button>
+                </center>
+            </div>
+        </div>
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                <div style="background-color: #333; width: 10px; height: 50px; margin-top: -47px; float: right; border-radius: 5px;"></div>
+                <div style="background-color: #333; width: 10px; height: 50px; margin-top: -47px; border-radius: 5px;"></div>
+                My Schedule
+            </div>
+            <div class="panel-body">
+                <div class="calendar hidden-print">
+                    <header>
+                        <h2 class="month"></h2>
+                        <a class="btn-prev fa fa-angle-left" href="#"></a> <a class="btn-next fa fa-angle-right" href="#"></a>
+                    </header>
+                    <table>
+                        <thead>
+                            <tr>
+                              <td>Sun</td>
+                              <td>Mon</td>
+                              <td>Tue</td>
+                              <td>Wed</td>
+                              <td>Thu</td>
+                              <td>Fri</td>
+                              <td>Sat</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ calendar|raw }}
+                            {#<tr>
+                                <td date-month="12" date-day="1">1</td>
+                                <td date-month="12" date-day="2">2</td>
+                                <td date-month="12" date-day="3">3</td>
+                                <td date-month="12" date-day="4">4</td>
+                                <td date-month="12" date-day="5">5</td>
+                                <td date-month="12" date-day="6">6</td>
+                                <td date-month="12" date-day="7">7</td>
+                            </tr>
+                            <tr>
+                                <td date-month="12" date-day="8">8</td>
+                                <td date-month="12" date-day="9">9</td>
+                                <td date-month="12" date-day="10">10</td>
+                                <td date-month="12" date-day="11">11</td>
+                                <td date-month="12" date-day="12">12</td>
+                                <td date-month="12" date-day="13">13</td>
+                                <td date-month="12" date-day="14">14</td>
+                            </tr>
+                            <tr>
+                                <td date-month="12" date-day="15">15</td>
+                                <td date-month="12" date-day="16">16</td>
+                                <td date-month="12" date-day="17">17</td>
+                                <td date-month="12" date-day="18">18</td>
+                                <td date-month="12" date-day="19">19</td>
+                                <td date-month="12" date-day="20">20</td>
+                                <td date-month="12" date-day="21">21</td>
+                            </tr>
+                            <tr>
+                                <td date-month="12" date-day="22">22</td>
+                                <td date-month="12" date-day="23">23</td>
+                                <td date-month="12" date-day="24">24</td>
+                                <td date-month="12" date-day="25">25</td>
+                                <td date-month="12" date-day="26">26</td>
+                                <td date-month="12" date-day="27">27</td>
+                                <td date-month="12" date-day="28">28</td>
+                            </tr>
+                            <tr>
+                                <td date-month="12" date-day="29">29</td>
+                                <td date-month="12" date-day="30">30</td>
+                                <td date-month="12" date-day="31">31</td>
+                                <td date-month="12" date-day="0">0</td>
+                                <td date-month="12" date-day="0">0</td>
+                                <td date-month="12" date-day="0">0</td>
+                                <td date-month="12" date-day="0">0</td>
+                            </tr>#}
+                        </tbody>
+                    </table>
+                    <div class="list">
+                        <div class="day-event" date-month="12" date-day="4">
+                            <a href="#" class="close fa fa-remove"></a>
+                            <h2 class="title">Lorem ipsum 1</h2>
+                            <p class="date">2014-12-4</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et diam faucibus sapien fermentum sollicitudin. Proin quis dictum leo, sed pharetra quam.</p>
+                            <label class="check-btn">
+                                <input type="checkbox" class="save" id="save" name="" value=""/>
+                                <span>Save to personal list!</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

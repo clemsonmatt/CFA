@@ -1,0 +1,44 @@
+{% extends 'CFAEventRegisterBundle:Shared:layout.html.twig' %}
+
+{% block page_title_header %}
+    Open Events
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <ol class="breadcrumb-custom">
+        <li class="active">
+            All Events
+        </li>
+    </ol>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        /* row-click */
+        $('.js-row-click').on('click', function(){
+            window.location.href = $(this).attr('id');
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default" style="min-height: 600px;">
+        <legend class="col-sm-12">
+            <h3 class="col-sm-12">Events</h3>
+        </legend>
+        <table class="table table-striped table-hover table-lg table-pointer">
+            <thead>
+                <th class="col-sm-2">Date</th>
+                <th>Event</th>
+            </thead>
+            {% for event in events %}
+                <tr id="{{ path('cfa_event_show', {'event': event.id}) }}" class="js-row-click">
+                    <td>{{ event.date|date('m-d-Y') }}</td>
+                    <td>{{ event }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

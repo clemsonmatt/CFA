@@ -1,0 +1,135 @@
+{% extends 'CFAEventRegisterBundle:Shared:layout.html.twig' %}
+
+{% block page_title_header %}
+    Manage
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <ol class="breadcrumb-custom">
+        <li>
+            <a href="{{ path('cfa_event_manage_index') }}" style="color: #eee;">
+                Manage Event Register
+            </a>
+        </li>
+        <li class="active">
+            Event Details
+        </li>
+    </ol>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        '@CFAEventRegisterBundle/Resources/public/js/highcharts.js'
+        '@CFAEventRegisterBundle/Resources/public/js/highcharts-more.js'
+        '@CFAEventRegisterBundle/Resources/public/js/charts.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <legend class="col-sm-12">
+            <h3>
+                <a href="{{ path('cfa_event_manage_event_edit', {'event': event.id}) }}" class="btn btn-default btn-sm pull-right">
+                    Edit Event
+                </a>
+                {{ event }}
+            </h3>
+        </legend>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel panel-dark">
+                        <div class="panel-body">
+                            <h1>
+                                <p class="pull-right">${{ total_sales|number_format(2, '.', ',') }}</p>
+                                Sales
+                            </h1>
+                        </div>
+                        <div class="panel-footer">
+                            <dl class="dl-horizontal" style="margin-bottom: 0px;">
+                                <dt>Check Average</dt>
+                                <dd>${{ (total_sales / event.transactions|length)|number_format(2, '.', ',') }}</dd>
+                                <dt>Highest Sale</dt>
+                                <dd>${{ highest_sale|number_format(2, '.', ',') }}</dd>
+                                <dt>Lowest Sale</dt>
+                                <dd>${{ lowest_sale|number_format(2, '.', ',') }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-dark">
+                        <div class="panel-body">
+                            <h1>
+                                <p class="pull-right">{{ event.transactions|length }}</p>
+                                Transactions
+                            </h1>
+                        </div>
+                        <div class="panel-footer">
+                            <dl class="dl-horizontal" style="margin-bottom: 0px;">
+                                <dt>Average Item Count</dt>
+                                <dd>{{ avg_item_count|number_format(2, '.', ',') }}</dd>
+                                <dt>Highest Item Count</dt>
+                                <dd>{{ highest_item_count }}</dd>
+                                <dt>Lowest Item Count</dt>
+                                <dd>{{ lowest_item_count }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# transaction breakdown #}
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="panel panel-dark">
+                        <div class="panel-heading">
+                            Transaction Breakdown
+                        </div>
+                        <div class="panel-body">
+                            <div id="menu-chart" data-chart="{{ item_breakdown|json_encode() }}" style="max-width: 100%;">
+
+                            </div>
+                        </div>
+                        <table class="table table-striped table-bordered">
+                            {% for item, count in item_breakdown %}
+                                <tr>
+                                    <th>{{ item }}</th>
+                                    <td>{{ count }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            {# all transactions #}
+            <br>
+            <legend><h3>All Transactions</h3></legend>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th>Time</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Paid</th>
+                </thead>
+                {% for transaction in event.transactions %}
+                    <tr>
+                        <td>{{ transaction.createdAt|date('g:ia') }}</td>
+                        <td>
+                            {% for item in transaction.items %}
+                                {%- if not loop.first -%},{% endif %}
+                                {{ item -}}
+                            {% endfor %}
+                        </td>
+                        <td>${{ transaction.total|number_format(2, '.', ',') }}</td>
+                        <td>${{ transaction.moneyRecieved|number_format(2, '.', ',') }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

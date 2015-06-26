@@ -1,0 +1,33 @@
+{% extends 'CFAEventRegisterBundle:Shared:layout.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block page_title_header %}
+    Manage
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <ol class="breadcrumb-custom">
+        <li>
+            <a href="{{ path('cfa_event_manage_index') }}" style="color: #eee;">
+                Manage Event Register
+            </a>
+        </li>
+        <li class="active">
+            {{ add_edit }} Menu Item
+        </li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <legend><h3>{{ add_edit }} Menu Item</h3></legend>
+            {{ form_start(form) }}
+                {{ form_rest(form) }}
+                <button type="submit" class="btn btn-success pull-right">
+                    Save Menu Item
+                </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

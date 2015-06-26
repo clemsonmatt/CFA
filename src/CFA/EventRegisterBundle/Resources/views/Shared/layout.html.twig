@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="//use.fonticons.com/2d2cc9ab.js"></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+
+        <title>{% block title %}Chick-fil-A · Clemson · Seneca{% endblock %}</title>
+        <!-- Bootstrap -->
+        {% block stylesheets %}
+            <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+            {% stylesheets
+                '@CFAEventRegisterBundle/Resources/public/css/bootstrap.css'
+                '@CFAEventRegisterBundle/Resources/public/css/custom.css'
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+    </head>
+
+    <body style="background-color: #404554">
+        {% include 'CFAEventRegisterBundle:Shared:nav.html.twig' %}
+
+        <div class="col-sm-12">
+            {% set flashTypes = [ 'info', 'notice', 'warning', 'error', 'success'] %}
+            {% set flashTypeMap = {
+                'info'    : 'info',
+                'notice'  : 'info',
+                'warning' : 'warning',
+                'error'   : 'danger',
+                'success' : 'success',
+            } %}
+            {% for flashType in flashTypes %}
+                {% for flashMessage in app.session.flashbag.get(flashType) %}
+                    <div class="hidden-print alert alert-{{ flashTypeMap[flashType] }}">
+                        <strong>
+                            {{ flashMessage|raw }}
+                        </strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block page_title %}
+                <h2 class="color-white" style="margin-bottom: 0px;">
+                    <ul class="nav navbar-nav navbar-right options-btn">
+                        <li class="dropdown">
+                            <button class="dropdown-toggle btn btn-cfa-clear pull-right" data-toggle="dropdown">
+                                <i class="fa fa-cog"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path('cfa_event_index') }}">
+                                        Open Events
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('cfa_event_manage_index') }}">
+                                        Manage Events
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="/logout">
+                                        <i class="power-off"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    {% block page_title_header %}
+                    {% endblock %}
+                </h2>
+                {% block page_breadcrumb %}
+                {% endblock %}
+            {% endblock %}
+        </div>
+        <br><br>
+
+        <div class="col-xs-12">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+
+        {% block javascripts %}
+            <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
+            <script src="{{ asset('bundles/cfaeventregister/js/jquery-1.11.1.min.js') }}"></script>
+            <!-- Include all JavaScripts, compiled by Assetic -->
+            <script src="{{ asset('bundles/cfaeventregister/js/lib/bootstrap/bootstrap.js') }}"></script>
+
+        {% endblock %}
+    </body>
+</html>
