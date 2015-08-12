@@ -3,7 +3,7 @@
  */
 
 html, body {
-  height: 100%;]
+    height: 100%;]
 }
 
 
@@ -33,6 +33,11 @@ html, body {
 
 .cfa-red {
     color: #e5173f;
+}
+
+
+.cfa-hr {
+    border-top: 2px dotted #eee;
 }
 
 
@@ -196,7 +201,11 @@ html, body {
 /* panel */
 .panel-cfa {
     border-radius: 0px;
-    border: 1px solid #ddd;
+    border: 0px;
+    padding: 5px 15px;
+}
+.panel-cfa-border {
+    border: 1px solid #eee;
 }
 .panel-cfa > .panel-heading {
     background-color: #fff;
@@ -205,15 +214,30 @@ html, body {
     line-height: 2.2;
     font-size: 1.4em;
     font-weight: 500;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 2px dotted #eee;
+    margin-bottom: 10px;
+}
+.panel-cfa > .panel-body {
+    padding: 0px;
+}
+.panel-cfa > .table > tbody > tr:first-child > td {
+    border: none;
+}
+.panel-cfa > .table > tbody > tr > td {
+    border-top: 2px dotted #eee;
 }
 .panel-cfa > .panel-breadcrumb,
 .panel-cfa > .panel-breadcrumb > a {
     color: #777;
 }
+.panel-cfa > .panel-footer {
+    border-top: 2px dotted #eee;
+    background-color: #fff;
+}
 .panel-body-red {
     background-color: #e5173f;
     color: #fff;
+    margin: -5px -15px;
 }
 
 
