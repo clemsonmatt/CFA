@@ -19,7 +19,7 @@ body {
     min-height: 850px;
     /*background-color: #f2f4f8;*/
     background-color: #F5F4F1;
-    border-top: 1px solid #ddd;
+    border-top: 0px solid #ddd;
 }
 
 @media(min-width:768px) {
@@ -27,7 +27,7 @@ body {
         position: inherit;
         margin: 0 0 0 250px;
         padding: 0 30px;
-        border-left: 1px solid #e7e7e7;
+        border-left: 0px solid #e7e7e7;
     }
 }
 

@@ -169,10 +169,11 @@ html, body {
 .cfa-breadcrumb {
     background-color: #fff;
     margin-left: 240px;
-    padding: 10px 30px;
-    font-size: 16px;
+    padding: 15px 30px;
+    font-size: 18px;
     color: #4c4c4f;
-    border-top: 1px solid #ddd;
+    border-top: 2px dotted #eee;
+    border-bottom: 0px;
 }
 .cfa-breadcrumb > a {
     color: #4c4c4f;
@@ -186,8 +187,10 @@ html, body {
 }
 
 #side-menu > li > a {
-    color: #f2f1f1;
+    /*color: #f2f1f1;*/
+    color: #9c9c9f;
     font-size: 16px;
+    padding: 20px;
 }
 #side-menu > li > a:hover,
 #side-menu > li > a:focus {
@@ -217,13 +220,12 @@ html, body {
     border-bottom: 2px dotted #eee;
     margin-bottom: 10px;
 }
-.panel-cfa > .panel-body {
-    padding: 0px;
-}
-.panel-cfa > .table > tbody > tr:first-child > td {
+.panel-cfa > .table > tbody > tr:first-child > td,
+.panel-cfa > .table > tbody > tr:first-child > th {
     border: none;
 }
-.panel-cfa > .table > tbody > tr > td {
+.panel-cfa > .table > tbody > tr > td,
+.panel-cfa > .table > tbody > tr > th {
     border-top: 2px dotted #eee;
 }
 .panel-cfa > .panel-breadcrumb,
