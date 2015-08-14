@@ -6808,8 +6808,8 @@ td.visible-print {
     border-radius: 0px;
     height: 70px;
     font-size: 18px;
-    border: 1px solid #ddd;
-    background-color: #fff;
+    border: 1px solid #e5173f;
+    background-color: inherit;
     color: #333;
     /*opacity: 0.8;*/
 }
@@ -6817,7 +6817,7 @@ td.visible-print {
 .cfa-login-button {
     /*margin-top: 5px;*/
     border-radius: 0px;
-    border-top: 2px solid #ddd;
+    border-top: 2px solid #e5173f;
     color: #fff;
     background-color: #e5173f;
     /*opacity: 0.8;*/
@@ -6844,25 +6844,88 @@ td.visible-print {
 }
 .form-signin input[type="text"]
 {
-    margin-bottom: -1px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    outline: none;
+    border: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+
+    padding: 5px;
+    margin-bottom: 0px;
+    border-bottom: 2px dotted #ddd;
+    border-radius: 0;
+    height: 50px;
+    color: #aaa;
+    line-height: 50px;
+    font-size: 22px;
+    background-color: #F5F4F1;
 }
 .form-signin input[type="password"]
 {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+    outline: none;
+    border: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+
+    padding: 5px;
+    margin-bottom: 20px;
+    border-bottom: 2px dotted #ddd;
+    border-radius: 0;
+    height: 50px;
+    color: #aaa;
+    line-height: 50px;
+    font-size: 22px;
+    background-color: #F5F4F1;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #aaa;
 }
 
 
 /* buttons */
 .btn-cfa-clear {
-    background-color: inherit;
-    border: 1px solid #fff;
-    color: #fff;
+    /*background-color: #e5173f;*/
+    background-color: #F5F4F1;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    color: #e5173f;
 }
-.btn-cfa-clear:hover {
+.btn-cfa-clear:hover,
+.btn-cfa-clear:active,
+.btn-cfa-clear:focus {
     background-color: #d5072f;
     color: #fff;
+}
+
+
+/* custom alerts */
+.alert-cfa {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 0px;
+    font-size: 16px;
+}
+
+.alert-cfa-success {
+    color: #fff;
+    background-color: #468847;
+    border-color: #266827;
+}
+
+.alert-cfa-danger {
+    color: #d93e38;
+    border-top: 2px dotted #d93e38;
+    border-bottom: 2px dotted #d93e38;
+    border-left: none;
+    border-right: none;
+}
+
+.alert-cfa-danger-1 {
+    color: #F5F4F1;
+    /*background-color: #dc6b6e;*/
+    background-color: #d93e38;
+    border-color: #a90e08;
 }

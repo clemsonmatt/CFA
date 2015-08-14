@@ -44,14 +44,29 @@
                         {% set flashTypes = [ 'info', 'notice', 'warning', 'error', 'success'] %}
                         {% set flashTypeMap = {
                             'info'    : 'info',
-                            'notice'  : 'info',
                             'warning' : 'warning',
                             'error'   : 'danger',
                             'success' : 'success',
                         } %}
+                        {% set iconMap = {
+                            'info'    : 'info-circle',
+                            'warning' : 'exclamation-triangle',
+                            'error'   : 'exclamation-triangle',
+                            'success' : 'check',
+                        } %}
+                        {% set btnColormap = {
+                            'info'    : '3498db',
+                            'warning' : 'c79a18',
+                            'error'   : '480607',
+                            'success' : '064807',
+                        } %}
                         {% for flashType in flashTypes %}
                             {% for flashMessage in app.session.flashbag.get(flashType) %}
-                                <div class="hidden-print alert alert-{{ flashTypeMap[flashType] }}">
+                                <div class="hidden-print alert-cfa alert-cfa-{{ flashTypeMap[flashType] }} alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" style="margin-top: 1px;">
+                                        <span style="color: #{{ btnColormap[flashType] }}">&times;</span>
+                                    </button>
+                                    {{ icon(iconMap[flashType]) }}
                                     <strong>
                                         {{ flashMessage|raw }}
                                     </strong>

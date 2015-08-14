@@ -7196,6 +7196,49 @@ html, body {
 }
 
 
+/* custom alerts */
+.alert-cfa {
+    margin-top: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 0px;
+    font-size: 16px;
+}
+
+.alert-cfa-success {
+    color: #468847;
+    border-top: 2px dotted #468847;
+    border-bottom: 2px dotted #468847;
+    border-left: none;
+    border-right: none;
+}
+
+.alert-cfa-info {
+    color: #3498db;
+    border-top: 2px dotted #3498db;
+    border-bottom: 2px dotted #3498db;
+    border-left: none;
+    border-right: none;
+}
+
+.alert-cfa-warning {
+    color: #c79a18;
+    border-top: 2px dotted #c79a18;
+    border-bottom: 2px dotted #c79a18;
+    border-left: none;
+    border-right: none;
+}
+
+.alert-cfa-danger {
+    color: #d93e38;
+    border-top: 2px dotted #d93e38;
+    border-bottom: 2px dotted #d93e38;
+    border-left: none;
+    border-right: none;
+}
+
+
 /* custom navbar */
 .navbar-cfa {
   background-color: #fff;

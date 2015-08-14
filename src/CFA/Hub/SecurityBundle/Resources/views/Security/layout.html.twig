@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" type="image/ico" href="{{ asset('bundles/cfamanage/images/favicon.ico') }}"/>
+        <link rel="icon" type="image/ico" href="{{ asset('bundles/cfahubshared/images/favicon.ico') }}"/>
 
         <title>{% block title %}CFA Hub Login{% endblock %}</title>
 
@@ -21,7 +21,7 @@
         {% endblock %}
     </head>
 
-    <body style="background-color: #fff">
+    <body style="background-color: #F5F4F1">
         <div id="">
             <div id="">
                 <div class="">
@@ -36,7 +36,7 @@
                         } %}
                         {% for flashType in flashTypes %}
                             {% for flashMessage in app.session.flashbag.get(flashType) %}
-                                <div class="hidden-print alert alert-{{ flashTypeMap[flashType] }}">
+                                <div class="hidden-print alert-cfa alert-cfa-{{ flashTypeMap[flashType] }}">
                                     <strong>
                                         {{ flashMessage|raw }}
                                     </strong>
