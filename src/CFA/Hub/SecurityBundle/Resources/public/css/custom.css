@@ -1,0 +1,125 @@
+.cfa-login-input {
+    border-radius: 0px;
+    height: 70px;
+    font-size: 18px;
+    border: 1px solid #e5173f;
+    background-color: inherit;
+    color: #333;
+    /*opacity: 0.8;*/
+}
+
+.cfa-login-button {
+    /*margin-top: 5px;*/
+    border-radius: 0px;
+    border-top: 2px solid #e5173f;
+    color: #fff;
+    background-color: #e5173f;
+    /*opacity: 0.8;*/
+    height: 70px;
+    font-size: 18px;
+}
+
+
+
+/* login screen */
+.form-signin .form-control
+{
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus
+{
+    z-index: 2;
+}
+.form-signin input[type="text"]
+{
+    outline: none;
+    border: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+
+    padding: 5px;
+    margin-bottom: 0px;
+    border-bottom: 2px dotted #ddd;
+    border-radius: 0;
+    height: 50px;
+    color: #aaa;
+    line-height: 50px;
+    font-size: 22px;
+    background-color: #F5F4F1;
+}
+.form-signin input[type="password"]
+{
+    outline: none;
+    border: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+
+    padding: 5px;
+    margin-bottom: 20px;
+    border-bottom: 2px dotted #ddd;
+    border-radius: 0;
+    height: 50px;
+    color: #aaa;
+    line-height: 50px;
+    font-size: 22px;
+    background-color: #F5F4F1;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #aaa;
+}
+
+
+/* buttons */
+.btn-cfa-clear {
+    /*background-color: #e5173f;*/
+    background-color: #F5F4F1;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    color: #e5173f;
+}
+.btn-cfa-clear:hover,
+.btn-cfa-clear:active,
+.btn-cfa-clear:focus {
+    background-color: #d5072f;
+    color: #fff;
+}
+
+
+/* custom alerts */
+.alert-cfa {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 0px;
+    font-size: 16px;
+}
+
+.alert-cfa-success {
+    color: #fff;
+    background-color: #468847;
+    border-color: #266827;
+}
+
+.alert-cfa-danger {
+    color: #d93e38;
+    border-top: 2px dotted #d93e38;
+    border-bottom: 2px dotted #d93e38;
+    border-left: none;
+    border-right: none;
+}
+
+.alert-cfa-danger-1 {
+    color: #F5F4F1;
+    /*background-color: #dc6b6e;*/
+    background-color: #d93e38;
+    border-color: #a90e08;
+}
