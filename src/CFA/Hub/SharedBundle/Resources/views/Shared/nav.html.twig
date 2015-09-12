@@ -92,6 +92,14 @@
                     Schedule
                 </a>
             </li>
+            {% if is_granted('ROLE_CFA_MARKETING') %}
+                <li>
+                    <a href="{{ path('cfa_hub_marketing_index') }}">
+                        {{ icon('briefcase') }}
+                        Marketing
+                    </a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </div>

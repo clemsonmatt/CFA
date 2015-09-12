@@ -48,6 +48,22 @@ class Person implements AdvancedUserInterface, \Serializable
         return $positions;
     }
 
+    public static function getValidRoles($key = null)
+    {
+        $roles = [
+            'ROLE_CFA'           => 'CFA Employee',
+            'ROLE_CFA_MANAGE'    => 'CFA Manager',
+            'ROLE_CFA_MARKETING' => 'CFA Marketing',
+            'ROLE_CFA_ADMIN'     => 'CFA Admin',
+        ];
+
+        if ($key !== null) {
+            return $roles[$key];
+        }
+
+        return $roles;
+    }
+
     public function getImageLocation ()
     {
         if ($this->getPicture() != null) {

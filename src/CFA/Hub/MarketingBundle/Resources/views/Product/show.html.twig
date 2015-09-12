@@ -1,0 +1,108 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    Marketing
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        <a href="{{ path('cfa_hub_marketing_index') }}">
+            Marketing
+        </a>
+        &raquo;
+        <a href="{{ path('cfa_hub_marketing_product_index') }}">
+            Product Categories
+        </a>
+        &raquo;
+        <a href="{{ path('cfa_hub_marketing_product_category_show', {'category': category}) }}">
+            {{ product.categoryList(category) }}
+        </a>
+        {% if product.group %}
+            &raquo;
+            <a href="{{ path('cfa_hub_marketing_product_category_group_show', {'category': category, 'group': product.group}) }}">
+                {{ product.groupList(product.group) }}
+            </a>
+        {% endif %}
+        &raquo;
+        {{ product }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-4">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                {{ product }}
+            </div>
+            <div class="panel-body">
+                <center>
+                    <img src="{{ asset('uploads/product/' ~ product.photo) }}" style="max-width: 100%;">
+                </center>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                Product Details
+            </div>
+            <div class="panel-body">
+                <h4>
+                    <div class="pull-right cfa-red">
+                        ${{ product.price|number_format(2) }}
+                    </div>
+                    {{ product }}
+                </h4>
+                <hr class="cfa-hr">
+
+                {# description #}
+                {% if product.description %}
+                    <p class="text-muted">
+                        {{ product.description }}
+                    </p>
+                {% endif %}
+
+                {# count description and serving size #}
+                <div class="row">
+                    <div class="col-md-6">
+                        {% if product.countDescription %}
+                            <h5>Count</h5>
+                            <div class="well">
+                                {{ product.countDescription }}
+                            </div>
+                        {% elseif product.servingSize %}
+                            <h5>Serving Size</h5>
+                            <div class="well">
+                                {{ product.servingSize }}
+                                {% if product.servingSize > 1 %}
+                                    People
+                                {% else %}
+                                    Person
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        {% if product.servingSize %}
+                            <h5>Serving Size</h5>
+                            <div class="well">
+                                {{ product.servingSize }}
+                                {% if product.servingSize > 1 %}
+                                    People
+                                {% else %}
+                                    Person
+                                {% endif %}
+                            </div>
+                        {% elseif product.countDescription %}
+                            <h5>Count</h5>
+                            <div class="well">
+                                {{ product.countDescription }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    Marketing
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        Marketing
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="col-sm-6">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                <a href="{{ path('cfa_hub_marketing_customer_index') }}">
+                    Customers
+                </a>
+            </div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                <a href="{{ path('cfa_hub_marketing_sales_index') }}">
+                    Sales
+                </a>
+            </div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                <a href="{{ path('cfa_hub_marketing_product_index') }}">
+                    Products
+                </a>
+            </div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

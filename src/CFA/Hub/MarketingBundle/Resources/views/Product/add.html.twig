@@ -1,0 +1,68 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    Marketing
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        <a href="{{ path('cfa_hub_marketing_index') }}">
+            Marketing
+        </a>
+        &raquo;
+        <a href="{{ path('cfa_hub_marketing_product_index') }}">
+            Product Categories
+        </a>
+        {% if product is defined %}
+            &raquo;
+            <a href="{{ path('cfa_hub_marketing_product_category_show', {'category': product.category}) }}">
+                {{ product.category }}
+            </a>
+            &raquo;
+            <a href="{{ path('cfa_hub_marketing_product_show', {'product': product.id}) }}">
+                {{ product }}
+            </a>
+        {% endif %}
+        &raquo;
+        {% if product is defined %}
+            Edit
+        {% else %}
+            Add
+        {% endif %}
+        Product
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="col-sm-12">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                Product Information
+            </div>
+            <div class="panel-body">
+                {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.category) }}
+                            {{ form_row(form.group) }}
+                            {{ form_row(form.price) }}
+                            {{ form_row(form.photo) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.description) }}
+                            {{ form_row(form.servingSize) }}
+                            {{ form_row(form.countDescription) }}
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-cfa">
+                            {{ icon('check') }}
+                            Save
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

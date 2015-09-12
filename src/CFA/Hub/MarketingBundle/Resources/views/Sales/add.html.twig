@@ -1,0 +1,136 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    Marketing
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        <a href="{{ path('cfa_hub_marketing_index') }}">
+            Marketing
+        </a>
+        &raquo;
+        <a href="{{ path('cfa_hub_marketing_customer_index') }}">
+            Customers
+        </a>
+        &raquo;
+        <a href="{{ path('cfa_hub_marketing_customer_show', {'customer': customer.id}) }}">
+            {{ customer }}
+        </a>
+        {% if sale is defined %}
+            &raquo;
+            <a href="{{ path('cfa_hub_marketing_sales_show', {'sale': sale.id}) }}">
+                Sale Details
+            </a>
+        {% endif %}
+        &raquo;
+        {% if sale is defined %}
+            Edit
+        {% else %}
+            Add
+        {% endif %}
+        Sale
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="col-sm-12">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                Order Details
+            </div>
+            <div class="panel-body">
+                {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            {% set group_name = null %}
+                            {% set category   = null %}
+                            {% set counter    = 0 %}
+
+                            {% for product in form.orders.vars.choices %}
+                                {% if category != product.data.category %}
+                                    {% if not loop.first %}
+                                        {% if counter > 0 and counter % 2 == 0 %}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                        {% else %}
+                                            </div>
+                                            <div class="col-md-6">
+                                        {% endif %}
+
+                                        {% if counter > 1 %}
+                                            <hr class="cfa-hr">
+                                        {% endif %}
+                                    {% endif %}
+                                    {% set counter  = counter + 1 %}
+                                    {% set category = product.data.category %}
+                                    <h4>{{ new_product.categoryList(category) }}</h4>
+                                {% endif %}
+
+
+                                {% if product.data.group and group_name != product.data.group %}
+                                    {% if group_name != null %}
+                                        <div style="border-top: 2px dotted #eee; margin-bottom: 10px;"></div>
+                                    {% endif %}
+
+                                    {% set group_name = product.data.group %}
+                                    <span class="text-muted">
+                                        {{ new_product.groupList(group_name) }}
+                                    </span>
+                                {% endif %}
+
+                                {{ form_widget(form.orders.offsetGet(product.value), {'label': product.label ~ ' - $' ~ product.data.price|number_format(2), 'attr': {'class': 'js-product'}}) }}
+                                <div class="well" id="js-product-details-{{ product.value }}" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <label style="min-width: 100%;">
+                                                Qty
+                                                <input type="number" class="form-control input-sm" name="orders_{{ product.value }}_qty" value="1">
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <label style="min-width: 100%;">
+                                                Special Requests
+                                                <textarea class="form-control input-block" name="orders_{{ product.value }}_special" rows="4"></textarea>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <hr class="cfa-hr">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.comments) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.pickupDate) }}
+                            {{ form_row(form.pickupTime) }}
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-cfa">
+                            {{ icon('check') }}
+                            Save
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $('.js-product').on('click', function(e){
+            $('#js-product-details-' + $(this).val()).toggle();
+        })
+    </script>
+{% endblock %}

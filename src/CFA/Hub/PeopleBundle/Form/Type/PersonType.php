@@ -70,11 +70,7 @@ class PersonType extends AbstractType
 
         $builder->add('roles', 'choice', [
             'label'   => 'Roles',
-            'choices' => [
-                'ROLE_CFA'        => 'CFA Employee',
-                'ROLE_CFA_MANAGE' => 'CFA Manager',
-                'ROLE_CFA_ADMIN'  => 'CFA Admin',
-            ],
+            'choices' => Person::getValidRoles(),
             'expanded' => true,
             'multiple' => true,
             'required' => true,

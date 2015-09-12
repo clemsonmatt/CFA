@@ -7418,6 +7418,9 @@ html, body {
     border-bottom: 2px dotted #eee;
     margin-bottom: 10px;
 }
+.panel-cfa > .panel-heading > a {
+    color: #e5173f;
+}
 .panel-cfa > .table > tbody > tr:first-child > td,
 .panel-cfa > .table > tbody > tr:first-child > th {
     border: none;
@@ -7530,6 +7533,12 @@ html, body {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+
+/* pointer */
+.pointer {
+  cursor: pointer;
 }
 
 

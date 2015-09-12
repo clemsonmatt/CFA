@@ -1,0 +1,60 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    Marketing
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        <a href="{{ path('cfa_hub_marketing_index') }}">
+            Marketing
+        </a>
+        &raquo;
+        <a href="{{ path('cfa_hub_marketing_customer_index') }}">
+            Customers
+        </a>
+        {% if customer is defined %}
+            &raquo;
+            <a href="{{ path('cfa_hub_marketing_customer_show', {'customer': customer.id}) }}">
+                {{ customer }}
+            </a>
+        {% endif %}
+        &raquo;
+        {% if customer is defined %}
+            Edit
+        {% else %}
+            Add
+        {% endif %}
+        Customer
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="col-sm-12">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                Customer Details
+            </div>
+            <div class="panel-body">
+                {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.firstName) }}
+                            {{ form_row(form.lastName) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.phone) }}
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-cfa">
+                            {{ icon('check') }}
+                            Save
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

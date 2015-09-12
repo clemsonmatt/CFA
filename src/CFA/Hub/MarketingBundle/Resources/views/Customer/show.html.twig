@@ -1,0 +1,108 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    Marketing
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        <a href="{{ path('cfa_hub_marketing_index') }}">
+            Marketing
+        </a>
+        &raquo;
+        <a href="{{ path('cfa_hub_marketing_customer_index') }}">
+            Customers
+        </a>
+        &raquo;
+        {{ customer }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="col-sm-12">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                            {{ icon('chevron-down') }}
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="{{ path('cfa_hub_marketing_sales_add', {'customer': customer.id}) }}">
+                                    {{ icon('plus') }}
+                                    Add Sale
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    {{ icon('edit') }}
+                                    Edit
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    {{ icon('remove') }}
+                                    Remove
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {{ customer }}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>About</h4>
+                        <table class="table table-striped table-bordered">
+                            <tr>
+                                <th>First Name</th>
+                                <td>{{ customer.firstName }}</td>
+                            </tr>
+                            <tr>
+                                <th>Last Name</th>
+                                <td>{{ customer.lastName }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ customer.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td>{{ customer.phone }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>Orders Placed</h4>
+                        <table class="table table-striped table-bordered table-hover pointer">
+                            <thead>
+                                <th>Placed</th>
+                                <th>Pickup</th>
+                                <th>Total</th>
+                            </thead>
+                            {% for sale in customer.sales %}
+                                <tr class="js-row-click" data-url="{{ path('cfa_hub_marketing_sales_show', {'sale': sale.id}) }}">
+                                    <td>{{ sale.createdAt|date('m/d/Y') }}</td>
+                                    <td>{{ sale.pickupDate|date('m/d/Y') }}</td>
+                                    <td>${{ sale.total|number_format(2) }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="2">
+                                        <span class="text-muted">
+                                            {{ icon('ban') }}
+                                            None
+                                        </span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

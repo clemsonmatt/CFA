@@ -1,0 +1,72 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block body %}
+    {% for sale in sales %}
+        <table style="min-width: 100%; page-break-after: always;">
+            <tr style="height: 275px; border: 1px solid #333;">
+                <td style="width: 50%; vertical-align: top; padding: 0px 25px;">
+                    <center>
+                        <h4>Front Counter</h4>
+                    </center>
+                    <h4>
+                        <div class="pull-right">
+                            ID: {{ sale.customer.id }}
+                        </div>
+                        {{ sale.customer }}
+                    </h4>
+                </td>
+                <td style="border-left: 1px solid #333; vertical-align: top; padding: 0px 25px;">
+                    <center>
+                        <h4>Kitchen</h4>
+                    </center>
+                    <h4>
+                        <div class="pull-right">
+                            ID: {{ sale.customer.id }}
+                        </div>
+                        {{ sale.customer }}
+                    </h4>
+                </td>
+            </tr>
+            <tr style="height: 275px; border: 1px solid #333;">
+                <td style="width: 50%; vertical-align: top; padding: 0px 25px;">
+                    <center>
+                        <h4>Cold Prep</h4>
+                    </center>
+                    <h4>
+                        <div class="pull-right">
+                            ID: {{ sale.customer.id }}
+                        </div>
+                        {{ sale.customer }}
+                    </h4>
+                </td>
+                <td style="border-left: 1px solid #333; vertical-align: top; padding: 0px 25px;">
+                    <center>
+                        <h4>Extras</h4>
+                    </center>
+                    <h4>
+                        <div class="pull-right">
+                            ID: {{ sale.customer.id }}
+                        </div>
+                        {{ sale.customer }}
+                    </h4>
+                </td>
+            </tr>
+            <tr style="height: 275px; border: 1px solid #333;">
+                <td style="width: 50%; vertical-align: top; padding: 0px 25px;">
+                    <center>
+                        <h4>Bag</h4>
+                    </center>
+                    <h4>
+                        <div class="pull-right">
+                            ID: {{ sale.customer.id }}
+                        </div>
+                        {{ sale.customer }}
+                    </h4>
+                </td>
+                <td style="border-left: 1px solid #333; vertical-align: top; padding: 0px 25px;">
+
+                </td>
+            </tr>
+        </table>
+    {% endfor %}
+{% endblock %}

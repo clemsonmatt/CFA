@@ -1,0 +1,52 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    Marketing
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        <a href="{{ path('cfa_hub_marketing_index') }}">
+            Marketing
+        </a>
+        &raquo;
+        <a href="{{ path('cfa_hub_marketing_product_index') }}">
+            Product Categories
+        </a>
+        &raquo;
+        {{ new_product.categoryList(category) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% set used_groups = [] %}
+
+    {% for product in products %}
+        {% if product.group and product.group not in used_groups %}
+            {% set used_groups = used_groups|merge([product.group]) %}
+            <div class="col-md-4 col-sm-6">
+                <div class="panel panel-cfa pointer js-row-click" data-url="{{ path('cfa_hub_marketing_product_category_group_show', {'category': category, 'group': product.group}) }}">
+                    <div class="panel-body">
+                        <center>
+                            <img src="{{ asset('uploads/product/' ~ product.photo) }}" style="max-width: 100%; max-height: 125px;">
+                        </center>
+                        <hr class="cfa-hr">
+                        <h4 class="text-center cfa-red">{{ new_product.groupList(product.group) }}</h4>
+                    </div>
+                </div>
+            </div>
+        {% elseif not product.group %}
+            <div class="col-md-4 col-sm-6">
+                <div class="panel panel-cfa pointer js-row-click" data-url="{{ path('cfa_hub_marketing_product_show', {'product': product.id, 'category': category}) }}">
+                    <div class="panel-body">
+                        <center>
+                            <img src="{{ asset('uploads/product/' ~ product.photo) }}" style="max-width: 100%; max-height: 125px;">
+                        </center>
+                        <hr class="cfa-hr">
+                        <h4 class="text-center cfa-red">{{ product }}</h4>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

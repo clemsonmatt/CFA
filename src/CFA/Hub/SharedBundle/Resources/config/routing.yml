@@ -3,6 +3,12 @@ cfa_hub_people:
     type:     annotation
     prefix:   /hub
 
+cfa_hub_marketing:
+    resource: "@CFAHubMarketingBundle/Controller/"
+    type:     annotation
+    prefix:   /hub/marketing
+
+
 login:
     path:     /login
     defaults: { _controller: CFAHubSecurityBundle:Security:login }

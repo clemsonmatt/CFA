@@ -43,6 +43,7 @@ assetic:
         - CFAHubPeopleBundle
         - CFAHubSharedBundle
         - CFAHubSecurityBundle
+        - CFAHubMarketingBundle
     filters:
         cssrewrite: ~
 

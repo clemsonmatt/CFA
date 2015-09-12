@@ -1,0 +1,115 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    Marketing
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        <a href="{{ path('cfa_hub_marketing_index') }}">
+            Marketing
+        </a>
+        &raquo;
+        <a href="{{ path('cfa_hub_marketing_customer_index') }}">
+            Customers
+        </a>
+        &raquo;
+        <a href="{{ path('cfa_hub_marketing_customer_show', {'customer': sale.customer.id}) }}">
+            {{ sale.customer }}
+        </a>
+        &raquo;
+        Sale Details
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="col-sm-12">
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                            {{ icon('chevron-down') }}
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="{{ path('cfa_hub_marketing_sales_edit', {'customer': sale.customer.id, 'sale': sale.id}) }}">
+                                    {{ icon('edit') }}
+                                    Edit
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                Order Details
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h4>Overview</h4>
+                        <table class="table table-striped table-bordered">
+                            <tr>
+                                <th class="col-sm-4">Customer Name</th>
+                                <td>{{ sale.customer }}</td>
+                            </tr>
+                            <tr>
+                                <th>Pickup Date</th>
+                                <td>{{ sale.pickupDate|date('m/d/Y') }}</td>
+                            </tr>
+                            <tr>
+                                <th>Pickup Time</th>
+                                <td>{{ sale.pickupTime|date('h:i A') }}</td>
+                            </tr>
+                        </table>
+
+                        {% if sale.comments %}
+                            <hr class="cfa-hr">
+                            <h4>Comments</h4>
+                            <div class="well">
+                                {{ sale.comments|nl2br }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>Order</h4>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <th>Product</th>
+                                <th>Special</th>
+                                <th>Qty</th>
+                                <th>Single Price</th>
+                                <th>Total</th>
+                            </thead>
+                            {% for order in sale.orders %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('cfa_hub_marketing_product_show', {'product': order.product.id, 'category': order.product.category}) }}" style="color: #333;">
+                                            {{ order.product }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {% if order.specialRequest %}
+                                            {{ order.specialRequest }}
+                                        {% else %}
+                                            <span class="text-muted">
+                                                {{ icon('ban') }}
+                                                None
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ order.qty }}</td>
+                                    <td>${{ order.product.price|number_format(2) }}</td>
+                                    <td>${{ (order.qty * order.product.price)|number_format(2) }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+
+                        <h3 class="cfa-red pull-right">
+                            Total: ${{ sale.total|number_format(2) }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

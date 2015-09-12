@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new CFA\Hub\SharedBundle\CFAHubSharedBundle(),
             new CFA\Hub\PeopleBundle\CFAHubPeopleBundle(),
             new CFA\Hub\SecurityBundle\CFAHubSecurityBundle(),
+            new CFA\Hub\MarketingBundle\CFAHubMarketingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

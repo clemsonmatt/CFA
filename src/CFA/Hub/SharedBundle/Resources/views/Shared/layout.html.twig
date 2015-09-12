@@ -14,6 +14,8 @@
             <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
             {% stylesheets
                 '@CFAHubSharedBundle/Resources/public/css/bootstrap/bootstrap.css'
+                '@CFAHubSharedBundle/Resources/public/css/bootstrap-datepicker/bootstrap-datepicker.css'
+                '@CFAHubSharedBundle/Resources/public/css/bootstrap-timepicker/bootstrap-timepicker.css'
                 '@CFAHubSharedBundle/Resources/public/css/sb-admin-custom.css'
                 '@CFAHubSharedBundle/Resources/public/css/custom.css'
                 '@CFAHubSharedBundle/Resources/public/css/calendar.css'
@@ -24,6 +26,7 @@
     </head>
 
     <body>
+        {% block body %}
         <div id="wrapper">
             {# navigation #}
             {#{% include 'CFAHubSharedBundle:Shared:nav.html.twig' %}#}
@@ -62,7 +65,7 @@
                         } %}
                         {% for flashType in flashTypes %}
                             {% for flashMessage in app.session.flashbag.get(flashType) %}
-                                <div class="hidden-print alert-cfa alert-cfa-{{ flashTypeMap[flashType] }} alert-dismissible">
+                                <div class="hidden-print alert-cfa alert-cfa-{{ flashTypeMap[flashType] }} alert-dismissible" style="margin-top: 15px;">
                                     <button type="button" class="close" data-dismiss="alert" style="margin-top: 1px;">
                                         <span style="color: #{{ btnColormap[flashType] }}">&times;</span>
                                     </button>
@@ -86,12 +89,15 @@
                 </div>
             </div>
         </div>
+        {% endblock %}
 
         {% block javascripts %}
 
             {% javascripts
                 'bundles/cfahubshared/js/jquery-1.11.1.min.js'
                 'bundles/cfahubshared/js/lib/bootstrap/bootstrap.js'
+                'bundles/cfahubshared/js/lib/bootstrap-datepicker/bootstrap-datepicker.js'
+                'bundles/cfahubshared/js/lib/bootstrap-timepicker/bootstrap-timepicker.js'
                 'bundles/cfahubshared/js/custom.js'
                 'bundles/cfahubshared/js/calendar.js'
             %}
@@ -99,8 +105,18 @@
             {% endjavascripts %}
 
             <script>
+                /* timepicker */
+                $('.timepicker').timepicker({showInputs: false});
+
                 /* datepicker */
-                // $('.datepicker').datepicker();
+                $('.datepicker').datepicker({
+                    autoclose: true
+                });
+
+                /* clickable row */
+                $('.js-row-click').on('click', function(e) {
+                    window.location.href = $(this).attr('data-url');
+                })
             </script>
 
         {% endblock %}

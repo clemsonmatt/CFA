@@ -1,0 +1,43 @@
+{% extends 'CFAHubSharedBundle:Shared:layout.html.twig' %}
+
+{% block page_title %}
+    Marketing
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="cfa-breadcrumb">
+        <div class="pull-right">
+            <a href="{{ path('cfa_hub_marketing_product_add') }}" class="btn btn-sm btn-default">
+                {{ icon('plus') }}
+            </a>
+        </div>
+        <a href="{{ path('cfa_hub_marketing_index') }}">
+            Marketing
+        </a>
+        &raquo;
+        Product Categories
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% set category = null %}
+
+    {% for product in products %}
+        {% if category != product.category %}
+            {% set category = product.category %}
+
+            <div class="col-md-4 col-sm-6" style="margin-bottom: 15px;">
+                <div class="panel panel-cfa pointer js-row-click" data-url="{{ path('cfa_hub_marketing_product_category_show', {'category': category}) }}">
+                    <div class="panel-body">
+                        <center>
+                            <img src="{{ asset('uploads/product/' ~ product.photo) }}" style="max-width: 100%; max-height: 125px;">
+                        </center>
+                        <hr class="cfa-hr">
+                        <h4 class="text-center cfa-red">{{ product.categoryList(category) }}</h4>
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+    {% endfor %}
+{% endblock %}
