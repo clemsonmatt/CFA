@@ -5,4 +5,9 @@ cfa_hub_shared:
 cfa_event_register:
     resource: "@CFAEventRegisterBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /event-register
+
+cfa_default:
+    resource: "@CFADefaultBundle/Controller/"
+    type: annotation
+    prefix: /

@@ -10,7 +10,7 @@ use CFA\EventRegisterBundle\Entity\Event;
 use CFA\EventRegisterBundle\Entity\Menu;
 
 /**
- * @Route("/event-register/manage")
+ * @Route("/manage")
  */
 class ManageController extends Controller
 {
@@ -79,7 +79,7 @@ class ManageController extends Controller
             'lowest_sale'        => $lowestSale,
             'highest_sale'       => $highestSale,
             'item_breakdown'     => $itemBreakdown,
-            'avg_item_count'     => ($itemCount / count($event->getTransactions())),
+            'avg_item_count'     => (count($event->getTransactions()) == 0 ? 0 : ($itemCount / count($event->getTransactions()))),
             'lowest_item_count'  => $lowestItemCount,
             'highest_item_count' => $highestItemCount,
         ]);

@@ -25,8 +25,7 @@
     <body style="background-color: #F5F4F1">
         {% include 'CFAEventRegisterBundle:Shared:nav.html.twig' %}
 
-
-        <div class="col-sm-12">
+        <div class="container">
             {% set flashTypes = [ 'info', 'notice', 'warning', 'error', 'success'] %}
             {% set flashTypeMap = {
                 'info'    : 'info',
@@ -49,31 +48,19 @@
                 <h2 class="cfa-red" style="margin-bottom: 0px; padding-right: 15px;">
                     <ul class="nav navbar-nav navbar-right btn-group">
                         <li style="font-size: 0.6em;">
-                            <a href="{{ path('cfa_event_index') }}" class="cfa-red">
-                                Register
-                            </a>
-                        </li>
-                        <li style="font-size: 0.6em;">
-                            <a href="{{ path('cfa_event_manage_index') }}" class="cfa-red">
-                                Manage
-                            </a>
-                        </li>
-                        <li style="font-size: 0.6em;">
                             <a href="/logout" class="cfa-red">
                                 {{ icon('power-off') }}
                             </a>
                         </li>
                     </ul>
                     {% block page_title_header %}
+                        Chick-fil-A Apps
                     {% endblock %}
                 </h2>
-                {% block page_breadcrumb %}
-                {% endblock %}
+                <hr class="cfa-red-hr">
             {% endblock %}
-        </div>
-        <br><br>
+            <br>
 
-        <div class="col-xs-12">
             {% block content %}
             {% endblock %}
         </div>
@@ -84,6 +71,12 @@
             <script src="{{ asset('bundles/cfaeventregister/js/jquery-1.11.1.min.js') }}"></script>
             <!-- Include all JavaScripts, compiled by Assetic -->
             <script src="{{ asset('bundles/cfaeventregister/js/lib/bootstrap/bootstrap.js') }}"></script>
+
+            <script>
+                $('.js-row-click').on('click', function(e){
+                    window.location.href = $(this).attr('data-url');
+                })
+            </script>
 
         {% endblock %}
     </body>

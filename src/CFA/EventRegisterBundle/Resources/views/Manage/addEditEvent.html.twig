@@ -8,13 +8,13 @@
 {% block page_breadcrumb %}
     <ol class="breadcrumb-custom">
         <li>
-            <a href="{{ path('cfa_event_manage_index') }}" style="color: #eee;">
+            <a href="{{ path('cfa_event_manage_index') }}">
                 Manage Event Register
             </a>
         </li>
         {% if add_edit == "Edit" %}
             <li>
-               <a href="{{ path('cfa_event_manage_event_show', {'event': event.id}) }}" style="color: #eee;">
+               <a href="{{ path('cfa_event_manage_event_show', {'event': event.id}) }}">
                    Event Details
                </a>
             </li>
@@ -26,7 +26,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="panel panel-default">
+    <div class="panel panel-cfa">
         <div class="panel-body">
             <legend><h3>{{ add_edit }} Event</h3></legend>
             {{ form_start(form) }}

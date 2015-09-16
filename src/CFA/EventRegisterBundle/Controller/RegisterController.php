@@ -10,7 +10,7 @@ use CFA\EventRegisterBundle\Entity\Event;
 use CFA\EventRegisterBundle\Entity\Transaction;
 
 /**
- * @Route("event-register")
+ * @Route("/")
  */
 class RegisterController extends Controller
 {

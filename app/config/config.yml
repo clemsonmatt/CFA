@@ -39,6 +39,7 @@ assetic:
     debug:          "%kernel.debug%"
     use_controller: false
     bundles:
+        - CFADefaultBundle
         - CFAEventRegisterBundle
         - CFAHubPeopleBundle
         - CFAHubSharedBundle

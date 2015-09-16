@@ -75,6 +75,8 @@ $(function() {
         return false;
     });
 
+
+
 });
 
 var Total = {

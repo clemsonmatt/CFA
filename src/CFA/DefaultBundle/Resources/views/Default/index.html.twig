@@ -1,0 +1,28 @@
+{% extends 'CFADefaultBundle:Shared:layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-cfa js-row-click" data-url="{{ path('cfa_hub_people_dashboard') }}" style="height: 135px; cursor: pointer;">
+                <div class="panel-body">
+                    <p style="border-left: 4px solid #e5173f;">
+                        <span class="cfa-red" style="font-size: 2.4em; padding-left: 15px; line-height: 3;">
+                            CFA Hub
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-cfa js-row-click" data-url="{{ path('cfa_event_index') }}" style="height: 135px; cursor: pointer;">
+                <div class="panel-body">
+                    <p style="border-left: 4px solid #e5173f;">
+                        <span class="cfa-red" style="font-size: 2.4em; padding-left: 15px; line-height: 3;">
+                            Event Register
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
