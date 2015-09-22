@@ -4,7 +4,8 @@
         <script src="//use.fonticons.com/2d2cc9ab.js"></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
         <meta name="description" content="">
         <meta name="author" content="">
 
@@ -84,6 +85,14 @@
             <script src="{{ asset('bundles/cfaeventregister/js/jquery-1.11.1.min.js') }}"></script>
             <!-- Include all JavaScripts, compiled by Assetic -->
             <script src="{{ asset('bundles/cfaeventregister/js/lib/bootstrap/bootstrap.js') }}"></script>
+
+            <script src="{{ asset('bundles/cfaeventregister/js/fastClick.js') }}"></script>
+
+            <script>
+                $(function() {
+                    FastClick.attach(document.body);
+                });
+            </script>
 
         {% endblock %}
     </body>

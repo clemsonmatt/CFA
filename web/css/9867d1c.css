@@ -6307,10 +6307,10 @@ button.close {
   content: "/\00a0";
 }
 .breadcrumb-custom > .active {
-  color: #bbb;
+  color: #999;
 }
 .breadcrumb-custom > li > a {
-    color: #ccc;
+    color: #bbb;
 }
 
 

@@ -17,4 +17,12 @@ class DefaultController extends Controller
     {
         return $this->render('CFADefaultBundle:Default:index.html.twig');
     }
+
+    /**
+     * @Route("/test")
+     */
+    public function testAction()
+    {
+        return $this->render('CFADefaultBundle:Default:test.html.twig');
+    }
 }

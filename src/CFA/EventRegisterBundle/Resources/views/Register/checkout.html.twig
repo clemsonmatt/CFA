@@ -11,7 +11,7 @@
                 All Events
             </a>
         </li>
-        <li style="color: #bbb;">
+        <li class="active">
             Register
         </li>
         <li class="active">
@@ -35,9 +35,11 @@
             var paid   = $('#transaction_moneyRecieved').val();
             var total  = $('#transaction-total').text().substring(1);
 
+            /* backspace */
             if (number == 'back') {
                 removedNumber = paid.slice(0, -1);
-                $('#transaction_moneyRecieved').val(removedNumber);
+                // console.log(removedNumber);
+                $('#transaction_moneyRecieved').val(parseFloat(removedNumber / 10).toFixed(2));
 
                 var newPaid = $('#transaction_moneyRecieved').val();
 
@@ -50,10 +52,25 @@
                 }
 
                 return true;
+            } else if (number == 'clear') {
+                $('#change-total').text('$--.--');
+                $('#transaction_moneyRecieved').val(parseFloat("0.0"));
+
+                return true;
             }
 
-            var sum = paid + number;
-            $('#transaction_moneyRecieved').val(sum);
+            /* entering a number */
+            if (parseFloat(paid) == 0) {
+                $('#transaction_moneyRecieved').val(parseFloat("0.0" + number));
+            } else {
+                var moveup  = parseFloat(paid) * 10;
+                var newPaid = moveup + parseFloat("0.0" + number);
+                $('#transaction_moneyRecieved').val(newPaid.toFixed(2));
+            }
+
+
+            var sum = newPaid;
+            // $('#transaction_moneyRecieved').val(sum);
 
             var regex = new RegExp(/^[0-9.]+/);
             var str   = String.fromCharCode(!e.charCode ? e.which : e.charCode);
@@ -190,9 +207,9 @@
                                         6
                                     </button>
                                 </td>
-                                <td style="width: 25%; height: 85px; padding: 0px 5px;" class="text-center js-add-cash" id=".">
+                                <td style="width: 25%; height: 85px; padding: 0px 5px;" class="text-center js-add-cash" id="clear">
                                     <button type="button" class="btn btn-checkout btn-block">
-                                        .
+                                        {{ icon('times-circle') }}
                                     </button>
                                 </td>
                             </tr>

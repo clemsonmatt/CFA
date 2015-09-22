@@ -15,6 +15,7 @@ class TransactionType extends AbstractType
     {
         $builder->add('moneyRecieved', 'text', [
             'label'    => 'Paid',
+            'data'     => '0.00',
             'required' => true,
         ]);
     }

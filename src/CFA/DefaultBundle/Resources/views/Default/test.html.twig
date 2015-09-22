@@ -1,0 +1,95 @@
+{% extends 'CFADefaultBundle:Shared:layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        footer {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          position: fixed;
+          height: 80px;
+          background-color: #999999;
+        }
+        footer ul.footerleft{
+            margin-left: 150px;
+            margin-top: 10px;
+        }
+        footer ul.footerleft li{
+            display: inline;
+            margin-right: 25px;
+        }
+        footer ul.footerright{
+            margin-right: 150px;
+            margin-top: 10px;
+        }
+        footer ul.footerright li{
+            display: inline;
+            margin-right: 25px;
+        }
+        footer a{
+            color: #222;
+        }
+
+        footer a:hover{
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .social:hover {
+             -webkit-transform: scale(1.0);
+             -webkit-transition-duration: 0.5s;
+         }
+         .social {
+             -webkit-transform: scale(0.8);
+             color: #222;
+
+         }
+    </style>
+{% endblock %}
+
+{% block content %}
+    </div>
+    <footer class="footer">
+        <nav class="navbar navbar-default navbar-custom">
+            <div class="container-fluid">
+                <div class="nav navbar-nav navbar-right">
+                    <ul class="footerright">
+                        <li>
+                            <a href="">Link 4</a>
+                        </li>
+                        <li>
+                            <a href="">Link 5</a>
+                        </li>
+                        <li>
+                            Text
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav navbar-nav navbar-left">
+                    <ul class="footerleft">
+                        <li>
+                            <a href="">Link 1</a>
+                        </li>
+                        <li>
+                            <a href="">Link 2</a>
+                        </li>
+                        <li>
+                            <a href="">Link 3</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="text-center">
+                    <a href=""><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
+                    <a href=""><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
+                    <a href=""><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+                    <a href=""><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+                </div>
+
+            </div>
+
+        </nav>
+    </footer>
+{% endblock %}
