@@ -6381,6 +6381,10 @@ button.close {
     border: none;
     border-radius: 0px;
 }
+.panel-cfa > .panel-heading {
+    border-bottom: 1px solid #eee;
+    color: #e5173f;
+}
 .panel-red {
     border-color: #e5173f;
 }
