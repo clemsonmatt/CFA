@@ -4,6 +4,7 @@ namespace CFA\Hub\MarketingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -115,5 +116,18 @@ class ProductController extends Controller
             'group'       => $group,
             'new_product' => new Product(),
         ]);
+    }
+
+    /**
+     * @Route("/{product}/get-product-details")
+     */
+    public function getProductDetails(Product $product)
+    {
+        return new JsonResponse([
+            'success' => true,
+            'data'    => [
+                'price' => $product->getPrice()
+            ],
+        ], 200);
     }
 }

@@ -48,6 +48,81 @@ class RegisterController extends Controller
             'title' => $event->getMenuItems(),
         ]);
 
+        $allItems    = $repository->findAll();
+        $productList = [];
+        foreach ($allItems as $item) {
+            $itemSlug = strtolower($item);
+            $itemSlug = str_replace(" ", "-", $itemSlug);
+            $itemSlug = str_replace(".", "", $itemSlug);
+
+            $productList[$item->getTitle()] = $itemSlug;
+        }
+
+        $transaction = new Transaction();
+        $transaction->setEvent($event);
+
+        $form = $this->createForm('menuItemCollection', $transaction);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $items = $repository->findByTitle(array_values($transaction->getItems()));
+
+            $itemsList = [];
+            foreach ($transaction->getItems() as $item) {
+                foreach ($items as $i) {
+                    if ($item == $i->getTitle()) {
+                        $itemsList[] = $i;
+                    }
+                }
+            }
+            $transaction->setItems(array_values($itemsList));
+
+            $total = 0;
+            foreach ($itemsList as $item) {
+                $total += $item->getPrice();
+            }
+            $transaction->setTotal($total);
+
+            $em->persist($transaction);
+            $em->flush();
+
+            return $this->redirectToRoute('cfa_event_checkout', [
+                'event'       => $event->getId(),
+                'transaction' => $transaction->getId()
+            ]);
+        }
+
+        return $this->render('CFAEventRegisterBundle:Register:show.html.twig', [
+            'event'          => $event,
+            'menu_entres'    => $menuEntres,
+            'menu_sides'     => $menuSides,
+            'menu_beverages' => $menuBeverages,
+            'product_list'   => $productList,
+            'form'           => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{event}/show-old", name="cfa_event_show_old")
+     */
+    public function showOldAction(Event $event, Request $request)
+    {
+        $em            = $this->getDoctrine()->getManager();
+        $repository    = $em->getRepository('CFAEventRegisterBundle:Menu');
+        $menuEntres    = $repository->findBy([
+            'type'  => ['Entre', 'Combo'],
+            'title' => $event->getMenuItems(),
+        ]);
+        $menuSides     = $repository->findBy([
+            'type'  => 'Side',
+            'title' => $event->getMenuItems(),
+        ]);
+        $menuBeverages = $repository->findBy([
+            'type'  => 'Beverage',
+            'title' => $event->getMenuItems(),
+        ]);
+
         $transaction = new Transaction();
         $transaction->setEvent($event);
 
@@ -83,7 +158,7 @@ class RegisterController extends Controller
             ]);
         }
 
-        return $this->render('CFAEventRegisterBundle:Register:show.html.twig', [
+        return $this->render('CFAEventRegisterBundle:Register:showOld.html.twig', [
             'event'          => $event,
             'menu_entres'    => $menuEntres,
             'menu_sides'     => $menuSides,

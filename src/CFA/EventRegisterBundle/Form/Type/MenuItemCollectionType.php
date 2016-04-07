@@ -4,9 +4,9 @@ namespace CFA\EventRegisterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MenuItemType extends AbstractType
+class MenuItemCollectionType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -18,21 +18,20 @@ class MenuItemType extends AbstractType
             'type'         => 'text',
             'allow_add'    => true,
             'allow_delete' => true,
+            'delete_empty' => true,
+            'required'     => false,
+            'by_reference' => false,
         ]);
-        // $builder->add('item', 'entity', [
-        //     'label'    => false,
-        //     'class'    => 'CFAEventRegisterBundle:Menu',
-        //     'required' => false,
-        //     'mapped'   => false,
-        // ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            'data_class' => 'CFAEventRegisterBundle:Transaction',
+        ]);
     }
 
     /**
@@ -40,6 +39,6 @@ class MenuItemType extends AbstractType
      */
     public function getName()
     {
-        return 'menuItem';
+        return 'menuItemCollection';
     }
 }

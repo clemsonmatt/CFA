@@ -8303,7 +8303,7 @@ html, body {
 .panel-cfa {
     border-radius: 0px;
     border: 0px;
-    padding: 5px 15px;
+    padding: 5px;
 }
 .panel-cfa-border {
     border: 1px solid #eee;
@@ -8316,7 +8316,8 @@ html, body {
     font-size: 1.4em;
     font-weight: 500;
     border-bottom: 2px dotted #eee;
-    margin-bottom: 10px;
+    margin: 0px -5px 0px -5px;
+    padding: 10px 25px;
 }
 .panel-cfa > .panel-heading > a {
     color: #e5173f;
@@ -8439,6 +8440,92 @@ html, body {
 /* pointer */
 .pointer {
   cursor: pointer;
+}
+
+
+/* sub-tabs */
+.tabs-container {
+    margin: 0px 0px -5px -15px;
+}
+
+.tabs {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.tabs.tabs-inline {
+    *zoom: 1;
+}
+.tabs.tabs-inline:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.tabs.tabs-inline.tabs-left {
+    position: relative;
+    float: left;
+    background: #ECF0F1;
+    width: 150px;
+}
+.tabs.tabs-inline.tabs-left > li:first-child > a {
+    border-top: 0;
+}
+.tabs.tabs-inline.tabs-left > li:last-child > a {
+    border-bottom: 2px dotted #eee;
+}
+.tabs.tabs-inline.tabs-left > li.write > a {
+    margin: 10px;
+    background: #ECF0F1;
+    color: #7F8C8D;
+}
+.tabs.tabs-inline.tabs-left > li.write > a:hover {
+    background: #d21b1b;
+    color: #fff;
+}
+.tabs.tabs-inline.tabs-left > li.active > a {
+    background: #e5173f;
+    color: #fff;
+    margin-right: -1px;
+}
+.tabs.tabs-inline.tabs-left > li.active > a:hover {
+    background: #fff;
+}
+.tabs.tabs-inline.tabs-left > li > a {
+    display: block;
+    padding: 10px 20px;
+    color: #7F8C8D;
+    background: #fff;
+    text-decoration: none;
+    border-top: 2px dotted #eee;
+    transition: all 0.3s ease 0s;
+}
+.tabs.tabs-inline.tabs-left > li > a:hover {
+    background: #ECF0F1;
+    color: #7F8C8D;
+}
+
+.tab-content {
+    background-color: #fff;
+}
+.tab-content.padding {
+    padding: 20px;
+}
+.tab-content.tab-content-inline {
+    border-left: 2px dotted #eee;
+    margin-left: 150px;
+    min-height: 400px;
+}
+.tab-content.tab-content-inline.tab-content-bottom {
+    border-left: 0;
+    margin-left: 0;
+}
+.tab-content.tab-content-inline:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
 }
 
 

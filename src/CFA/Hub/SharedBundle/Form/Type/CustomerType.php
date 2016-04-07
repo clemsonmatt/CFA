@@ -17,12 +17,17 @@ class CustomerType extends AbstractType
     {
         $builder->add('firstName', 'text', [
             'label'    => 'First Name',
-            'required' => true,
+            'required' => false,
         ]);
 
         $builder->add('lastName', 'text', [
             'label'    => 'Last Name',
-            'required' => true,
+            'required' => false,
+        ]);
+
+        $builder->add('companyName', 'text', [
+            'label'    => 'Company Name',
+            'required' => false,
         ]);
 
         $builder->add('email', 'email', [
@@ -32,7 +37,7 @@ class CustomerType extends AbstractType
 
         $builder->add('phone', 'text', [
             'label'    => 'Phone',
-            'required' => false,
+            'required' => true,
         ]);
     }
 

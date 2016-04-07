@@ -10,106 +10,194 @@
             Marketing
         </a>
         &raquo;
-        <a href="{{ path('cfa_hub_marketing_customer_index') }}">
-            Customers
+        <a href="{{ path('cfa_hub_marketing_sales_index') }}">
+            Sales
         </a>
         &raquo;
-        <a href="{{ path('cfa_hub_marketing_customer_show', {'customer': sale.customer.id}) }}">
-            {{ sale.customer }}
-        </a>
-        &raquo;
-        Sale Details
+        Manage Sale
     </div>
 {% endblock %}
 
 {% block content %}
-    <div class="col-sm-12">
+    <div class="col-md-8">
+        {# add an order to a sale #}
         <div class="panel panel-cfa">
             <div class="panel-heading">
-                <div class="pull-right">
-                    <div class="btn-group">
-                        <button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-                            {{ icon('chevron-down') }}
-                        </button>
-                        <ul class="dropdown-menu pull-right">
-                            <li>
-                                <a href="{{ path('cfa_hub_marketing_sales_edit', {'customer': sale.customer.id, 'sale': sale.id}) }}">
-                                    {{ icon('edit') }}
-                                    Edit
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                Order Details
+                Add Product
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h4>Overview</h4>
-                        <table class="table table-striped table-bordered">
-                            <tr>
-                                <th class="col-sm-4">Customer Name</th>
-                                <td>{{ sale.customer }}</td>
-                            </tr>
-                            <tr>
-                                <th>Pickup Date</th>
-                                <td>{{ sale.pickupDate|date('m/d/Y') }}</td>
-                            </tr>
-                            <tr>
-                                <th>Pickup Time</th>
-                                <td>{{ sale.pickupTime|date('h:i A') }}</td>
-                            </tr>
-                        </table>
-
-                        {% if sale.comments %}
-                            <hr class="cfa-hr">
-                            <h4>Comments</h4>
-                            <div class="well">
-                                {{ sale.comments|nl2br }}
+                <form action="{{ path('cfa_hub_marketing_sales_add_to_sale', {'sale': sale.id}) }}" method="post" id="js-add-product-form">
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ form_row(order_form.product, {'attr': {'class': 'js-product-input'}}) }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ form_row(order_form.qty, {'attr': {'class': 'js-qty-input'}}) }}
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Price</label>
+                                <div id="js-product-price" style="padding: 6px 10px; border: 2px dotted #eee; border-radius: 4px;">
+                                    $0.00
+                                </div>
                             </div>
-                        {% endif %}
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Total</label>
+                                <div id="js-product-total" style="padding: 6px 10px; border: 2px dotted #eee; border-radius: 4px;">
+                                    $0.00
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-8">
-                        <h4>Order</h4>
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                                <th>Product</th>
-                                <th>Special</th>
-                                <th>Qty</th>
-                                <th>Single Price</th>
-                                <th>Total</th>
-                            </thead>
-                            {% for order in sale.orders %}
-                                <tr>
-                                    <td>
-                                        <a href="{{ path('cfa_hub_marketing_product_show', {'product': order.product.id, 'category': order.product.category}) }}" style="color: #333;">
-                                            {{ order.product }}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        {% if order.specialRequest %}
-                                            {{ order.specialRequest }}
-                                        {% else %}
-                                            <span class="text-muted">
-                                                {{ icon('ban') }}
-                                                None
-                                            </span>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ order.qty }}</td>
-                                    <td>${{ order.product.price|number_format(2) }}</td>
-                                    <td>${{ (order.qty * order.product.price)|number_format(2) }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
+                    {{ form_row(order_form.specialRequest) }}
+                    <button type="submit" class="btn btn-cfa pull-right">
+                        {{ icon('plus') }}
+                        Add to order
+                    </button>
+                </form>
+            </div>
+        </div>
 
-                        <h3 class="cfa-red pull-right">
-                            Total: ${{ sale.total|number_format(2) }}
-                        </h3>
-                    </div>
-                </div>
+        {# table of orders in sale #}
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                Order
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                        <th>Comments</th>
+                    </thead>
+                    <tbody id="js-order-table">
+                        {% for order in sale.orders %}
+                            <tr>
+                                <td>{{ order.product }}</td>
+                                <td>${{ order.product.price|number_format(2) }}</td>
+                                <td>{{ order.qty }}</td>
+                                <td>${{ (order.product.price * order.qty)|number_format(2) }}</td>
+                                <td>{{ order.specialRequest }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">
+                                    {{ icon('ban') }}
+                                    None
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+    <div class="col-md-4">
+        {# customer info #}
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                Customer
+            </div>
+            <div class="panel-body">
+                <form action="{{ path('cfa_hub_marketing_sales_customer_add', {'sale': sale.id}) }}" method="post">
+                    {{ form_row(customer_form.firstName) }}
+                    {{ form_row(customer_form.lastName) }}
+                    {{ form_row(customer_form.companyName) }}
+                    {{ form_row(customer_form.email) }}
+                    {{ form_row(customer_form.phone) }}
+                    <button type="submit" class="btn btn-cfa pull-right">
+                        {{ icon('check') }}
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        {# sale details #}
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                Sale Details
+            </div>
+            <div class="panel-body">
+                form for sale details
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(function(){
+            $('.js-product-input').on('change', function(){
+                // Order.productChange($('.js-product-input option:selected').text());
+                $.ajax({
+                    type: "post",
+                    url: "/hub/marketing/product/" + $('.js-product-input option:selected').val() + "/get-product-details"
+                })
+                .done(function(data){
+                    Order.updateProductDetails(data.data);
+                });
+            });
+
+            $('.js-qty-input').on('change', function(){
+                Order.updateProductDetailsForQty($(this).val());
+            });
+
+            $('#js-add-product-form').on('submit', function(e){
+                e.preventDefault();
+
+                // var inputsOk = Course.checkInputs();
+
+                // if (inputsOk) {
+                    var data = $(this).serialize();
+                    console.log(data);
+
+                    // Course.clearInputs();
+
+                    $.ajax({
+                        type: $(this).attr('method'),
+                        url: $(this).attr('action'),
+                        data: data
+                    })
+
+                    .done(function(data){
+                        Order.addToTable(data.data);
+                    });
+                // }
+            });
+
+            var Order = {
+                addToTable: function(data){
+                    var table = $('#js-order-table');
+                    var tr = "<tr>"
+                        + "<td>" + data['productName'] + "</td>"
+                        + "<td>$" + parseInt(data['productPrice']).toFixed(2) + "</td>"
+                        + "<td>" + data['qty'] + "</td>"
+                        + "<td>$" + parseInt(data['total']).toFixed(2) + "</td>"
+                        + "<td>" + data['comments'] + "</td>"
+                    + "</tr>";
+
+                    table.append(tr);
+                },
+
+                updateProductDetails: function(data){
+                    $('#js-product-price').text('$' + data['price'].toFixed(2));
+                    $('#js-product-total').text('$' + ($('.js-qty-input').val() * data['price']).toFixed(2));
+                },
+
+                updateProductDetailsForQty: function(qty){
+                    var price = $('#js-product-price').text();
+                    price     = price.replace("$", "");
+
+                    $('#js-product-total').text('$' + (parseInt(qty) * parseInt(price)).toFixed(2));
+                }
+            };
+        });
+    </script>
 {% endblock %}

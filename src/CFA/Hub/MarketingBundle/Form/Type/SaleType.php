@@ -1,6 +1,6 @@
 <?php
 
-namespace CFA\Hub\SharedBundle\Form\Type;
+namespace CFA\Hub\MarketingBundle\Form\Type;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use Symfony\Component\Form\AbstractType;
@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityRepository;
 use CFA\Hub\SharedBundle\Entity\Sale;
 
 /**
- * @DI\Service("cfa.shared.form.type.sale")
+ * @DI\Service("cfa.marketing.form.type.sale")
  * @DI\Tag("form.type", attributes={ "alias" = "cfa_sale" })
  */
 class SaleType extends AbstractType

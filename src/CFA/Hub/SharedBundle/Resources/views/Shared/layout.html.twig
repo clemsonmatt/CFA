@@ -113,6 +113,9 @@
                     autoclose: true
                 });
 
+                /* tooltip */
+                $('[data-toggle="tooltip"]').tooltip();
+
                 /* clickable row */
                 $('.js-row-click').on('click', function(e) {
                     window.location.href = $(this).attr('data-url');

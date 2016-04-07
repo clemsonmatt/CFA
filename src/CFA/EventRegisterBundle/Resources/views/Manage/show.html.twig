@@ -40,59 +40,76 @@
                         {{ event }}
                     </h3>
                 </div>
-                <div class="panel-body">
-                    <h2>
-                        <p class="pull-right">${{ total_sales|number_format(2, '.', ',') }}</p>
-                        Sales
-                    </h2>
-                    <div class="well">
-                        <div class="row">
-                            {# sales - check avg, lowest, highest #}
-                            <div class="col-md-6">
-                                <dl class="dl-horizontal" style="margin-bottom: 0px;">
-                                    <dt>Check Average</dt>
-                                    <dd>
+            </div>
+            <div class="row">
+                {# sales #}
+                <div class="col-md-6">
+                    <div class="panel panel-cfa">
+                        <div class="panel-heading">
+                            <h3>
+                                <p class="pull-right">${{ total_sales|number_format(2, '.', ',') }}</p>
+                                Sales
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>Check Average</th>
+                                    <td>
                                         {% if event.transactions|length %}
                                             ${{ (total_sales / event.transactions|length)|number_format(2, '.', ',') }}
                                         {% endif %}
-                                    </dd>
-                                    <dt>Highest Sale</dt>
-                                    <dd>${{ highest_sale|number_format(2, '.', ',') }}</dd>
-                                    <dt>Lowest Sale</dt>
-                                    <dd>${{ lowest_sale|number_format(2, '.', ',') }}</dd>
-                                </dl>
-                            </div>
-
-                            {# sales - total, cost, profit #}
-                            <div class="col-md-6">
-                                <dl class="dl-horizontal" style="margin-bottom: 0px;">
-                                    <dt>Recieved</dt>
-                                    <dd>${{ total_sales|number_format(2, '.', ',') }}</dd>
-                                    <dt>Cost</dt>
-                                    <dd>${{ total_cost|number_format(2, '.', ',') }}</dd>
-                                    <dt>Profit</dt>
-                                    <dd>${{ (total_sales - total_cost)|number_format(2, '.', ',') }}</dd>
-                                </dl>
-                            </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Highest Sale</th>
+                                    <td>${{ highest_sale|number_format(2, '.', ',') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Lowest Sale</th>
+                                    <td>${{ lowest_sale|number_format(2, '.', ',') }}</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
-                    <hr>
+                </div>
 
-                    {# transactions #}
-                    <h2>
-                        <p class="pull-right">{{ event.transactions|length }}</p>
-                        Transactions
-                    </h2>
-                    <div class="well">
-                        <dl class="dl-horizontal" style="margin-bottom: 0px;">
-                            <dt>Average Item Count</dt>
-                            <dd>{{ avg_item_count|number_format(2, '.', ',') }}</dd>
-                            <dt>Highest Item Count</dt>
-                            <dd>{{ highest_item_count }}</dd>
-                            <dt>Lowest Item Count</dt>
-                            <dd>{{ lowest_item_count }}</dd>
-                        </dl>
+                {# transactions #}
+                <div class="col-md-6">
+                    <div class="panel panel-cfa">
+                        <div class="panel-heading">
+                            <h3>
+                                <p class="pull-right">{{ event.transactions|length }}</p>
+                                Transactions
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>Average Item Count</th>
+                                    <td>{{ avg_item_count|number_format(2, '.', ',') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Highest Item Count</th>
+                                    <td>{{ highest_item_count }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Lowest Item Count</th>
+                                    <td>{{ lowest_item_count }}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            {# transaction timeline #}
+            <div class="panel panel-cfa">
+                <div class="panel-heading">
+                    <h3>Transaction Timeline</h3>
+                </div>
+                <div class="panel-body" style="min-height: 390px;">
+
                 </div>
             </div>
         </div>

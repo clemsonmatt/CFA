@@ -5,6 +5,7 @@ namespace CFA\Hub\SharedBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 use CFA\Hub\SharedBundle\Traits\TimestampableTrait;
 
@@ -28,6 +29,28 @@ class Customer
     }
 
     /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if ($this->firstName === null && $this->lastName !== null) {
+            $context->buildViolation('First name is needed.')
+                ->atPath('firstName')
+                ->addViolation();
+        } elseif ($this->firstName !== null && $this->lastName === null) {
+            $context->buildViolation('Last name is needed.')
+                ->atPath('lastName')
+                ->addViolation();
+        } elseif ($this->companyName === null && $this->firstName === null) {
+            $context->buildViolation('Person or company name needed')
+                ->atPath('firstName')
+                ->atPath('lastName')
+                ->atPath('companyName')
+                ->addViolation();
+        }
+    }
+
+    /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -35,14 +58,19 @@ class Customer
     protected $id;
 
     /**
-     * @ORM\Column(name="first_name", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(name="last_name", type="string", length=255)
+     * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      */
     private $lastName;
+
+    /**
+     * @ORM\Column(name="company_name", type="string", length=255, nullable=true)
+     */
+    private $companyName;
 
     /**
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
@@ -58,11 +86,6 @@ class Customer
      * @ORM\OneToMany(targetEntity="CFA\Hub\SharedBundle\Entity\Sale", mappedBy="customer")
      */
     private $sales;
-
-    /**
-     * @ORM\OneToMany(targetEntity="CFA\Hub\SharedBundle\Entity\Order", mappedBy="customer")
-     */
-    private $orders;
 
 
     /**
@@ -119,6 +142,29 @@ class Customer
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    /**
+     * Set companyName
+     *
+     * @param string $companyName
+     * @return Customer
+     */
+    public function setCompanyName($companyName)
+    {
+        $this->companyName = $companyName;
+
+        return $this;
+    }
+
+    /**
+     * Get companyName
+     *
+     * @return string
+     */
+    public function getCompanyName()
+    {
+        return $this->companyName;
     }
 
     /**

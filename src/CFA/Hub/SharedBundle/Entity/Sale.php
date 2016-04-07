@@ -43,7 +43,7 @@ class Sale
 
     /**
      * @ORM\ManyToOne(targetEntity="CFA\Hub\SharedBundle\Entity\Customer", inversedBy="sales")
-     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=true)
      **/
     private $customer;
 

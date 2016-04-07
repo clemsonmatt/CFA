@@ -37,14 +37,12 @@ class ManageController extends Controller
      */
     public function showAction(Event $event)
     {
-        $totalCost   = 0;
-        $totalSales  = 0;
+        $totalSales   = 0;
         $lowestSale  = 0;
         $highestSale = 0;
 
         foreach ($event->getTransactions() as $transaction) {
-            $totalCost += $transaction->getTotal();
-            $totalSales += $transaction->getMoneyRecieved();
+            $totalSales += $transaction->getTotal();
 
             if ($transaction->getTotal() > $highestSale) {
                 $highestSale = $transaction->getTotal();
@@ -79,7 +77,6 @@ class ManageController extends Controller
 
         return $this->render('CFAEventRegisterBundle:Manage:show.html.twig', [
             'event'              => $event,
-            'total_cost'         => $totalCost,
             'total_sales'        => $totalSales,
             'lowest_sale'        => $lowestSale,
             'highest_sale'       => $highestSale,

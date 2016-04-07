@@ -26,12 +26,6 @@ class Order
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CFA\Hub\SharedBundle\Entity\Customer", inversedBy="orders")
-     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
-     **/
-    private $customer;
-
-    /**
      * @ORM\ManyToOne(targetEntity="CFA\Hub\SharedBundle\Entity\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      **/
@@ -62,29 +56,6 @@ class Order
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set customer
-     *
-     * @param Customer $customer
-     * @return Order
-     */
-    public function setCustomer(Customer $customer)
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
-    /**
-     * Get customer
-     *
-     * @return Customer
-     */
-    public function getCustomer()
-    {
-        return $this->customer;
     }
 
     /**

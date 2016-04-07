@@ -7,7 +7,7 @@
 {% block content %}
     {# management #}
     {% for person in management %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="panel panel-cfa">
                 <div class="panel-body">
                     <a href="{{ path('cfa_hub_people_show', {'person': person.id}) }}">
@@ -43,7 +43,7 @@
                         {{ person.phone }}
                     </p>
                     <hr style="margin: 10px 0px;" class="cfa-hr">
-                    <p class="light-grey">
+                    <p class="light-grey" style="max-width: 100%; overflow: hidden; white-space: nowrap;">
                         {{ icon('envelope-square') }}
                         {{ person.email }}
                     </p>
@@ -54,7 +54,7 @@
 
     {# team members #}
     {% for person in team_members %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="panel panel-cfa">
                 <div class="panel-body">
                     <a href="{{ path('cfa_hub_people_show', {'person': person.id}) }}">
@@ -90,7 +90,7 @@
                         {{ person.phone }}
                     </p>
                     <hr style="margin: 10px 0px;" class="cfa-hr">
-                    <p class="light-grey">
+                    <p class="light-grey" style="max-width: 100%; overflow: hidden; white-space: nowrap;">
                         {{ icon('envelope-square') }}
                         {{ person.email }}
                     </p>

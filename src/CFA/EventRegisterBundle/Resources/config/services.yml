@@ -9,6 +9,10 @@ services:
         class: CFA\EventRegisterBundle\Form\Type\MenuType
         tags:
             - { name: form.type, alias: menu }
+    cfa.event.form.type.menuItemCollection:
+        class: CFA\EventRegisterBundle\Form\Type\MenuItemCollectionType
+        tags:
+            - { name: form.type, alias: menuItemCollection }
     cfa.event.form.type.menuItem:
         class: CFA\EventRegisterBundle\Form\Type\MenuItemType
         tags:
