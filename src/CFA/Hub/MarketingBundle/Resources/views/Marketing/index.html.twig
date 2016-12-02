@@ -12,22 +12,53 @@
 
 {% block content %}
     <div class="col-sm-6">
+        {# customers #}
         <div class="panel panel-cfa">
             <div class="panel-heading">
+                <div class="btn-group pull-right">
+                    <a href="{{ path('cfa_hub_marketing_customer_index') }}" class="btn btn-cfa">
+                        {{ icon('users') }}
+                        All Customers
+                    </a>
+                </div>
                 <a href="{{ path('cfa_hub_marketing_customer_index') }}">
                     Customers
                 </a>
             </div>
             <div class="panel-body">
+                <div id="customer-chart" data-chart="{{ top_customers|json_encode() }}" style="max-width: 100%;"></div>
+            </div>
+        </div>
 
+        {# products #}
+        <div class="panel panel-cfa">
+            <div class="panel-heading">
+                <div class="btn-group pull-right">
+                    <a href="{{ path('cfa_hub_marketing_product_index') }}" class="btn btn-cfa">
+                        {{ icon('list') }}
+                        All Products
+                    </a>
+                </div>
+                <a href="{{ path('cfa_hub_marketing_product_index') }}">
+                    Products
+                </a>
+            </div>
+            <div class="panel-body">
+                chart of top products
             </div>
         </div>
     </div>
+
+    {# sales #}
     <div class="col-sm-6">
         <div class="panel panel-cfa">
             <div class="panel-heading">
-                <div class="pull-right">
-                    <a href="{{ path('cfa_hub_marketing_sales_add') }}" class="btn btn-sm btn-cfa">
+                <div class="btn-group pull-right">
+                    <a href="{{ path('cfa_hub_marketing_sales_index') }}" class="btn btn-default">
+                        {{ icon('search') }}
+                        Search
+                    </a>
+                    <a href="{{ path('cfa_hub_marketing_sales_add') }}" class="btn btn-cfa">
                         {{ icon('plus') }}
                         New Sale
                     </a>
@@ -37,20 +68,153 @@
                 </a>
             </div>
             <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#upcomming" data-toggle="tab">Upcomming Sales</a>
+                    </li>
+                    <li>
+                        <a href="#recent" data-toggle="tab">Recent Orders</a>
+                    </li>
+                </ul>
+                <br>
+                <div class="tab-content">
+                    {# upcomming sales #}
+                    <div class="tab-pane active" id="upcomming">
+                        <h4>Upcomming Sales</h4>
+                        <table class="table table-striped table-bordered table-hover pointer">
+                            <thead>
+                                <th class="col-sm-3">Pickup Date</th>
+                                <th class="col-sm-3">Pickup Time</th>
+                                <th class="col-sm-3">Customer</th>
+                                <th class="col-sm-3">Total</th>
+                            </thead>
+                            {% for sale in upcomming_sales %}
+                                <tr class="js-row-click" data-url="{{ path('cfa_hub_marketing_sales_show', {'sale': sale.id}) }}">
+                                    <td>{{ sale.pickupDate|date('m/d/Y') }}</td>
+                                    <td>{{ sale.pickupTime|date('h:i A') }}</td>
+                                    <td>{{ sale.customer }}</td>
+                                    <td>${{ sale.total|number_format(2) }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
 
+                    {# recent sales #}
+                    <div class="tab-pane" id="recent">
+                        <h4>Recent Orders</h4>
+                        <table class="table table-striped table-bordered table-hover pointer">
+                            <thead>
+                                <th class="col-md-2">Order Date</th>
+                                <th class="col-md-2">Pickup Date</th>
+                                <th class="col-sm-2">Pickup Time</th>
+                                <th class="col-sm-3">Customer</th>
+                                <th class="col-sm-3">Total</th>
+                            </thead>
+                            {% for sale in recent_sales %}
+                                <tr class="js-row-click" data-url="{{ path('cfa_hub_marketing_sales_show', {'sale': sale.id}) }}">
+                                    <td>{{ sale.createdAt|date('m/d/Y') }}</td>
+                                    <td>
+                                        {% if sale.pickupDate %}
+                                            {{ sale.pickupDate|date('m/d/Y') }}
+                                        {% else %}
+                                            &mdash;
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if sale.pickupTime %}
+                                            {{ sale.pickupTime|date('h:i A') }}
+                                        {% else %}
+                                            &mdash;
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ sale.customer|default('&mdash;')|raw }}</td>
+                                    <td>${{ sale.total|number_format(2) }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
-        <div class="panel panel-cfa">
-            <div class="panel-heading">
-                <a href="{{ path('cfa_hub_marketing_product_index') }}">
-                    Products
-                </a>
-            </div>
-            <div class="panel-body">
+{% endblock %}
 
-            </div>
-        </div>
-    </div>
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        '@CFAHubSharedBundle/Resources/public/js/highcharts.js'
+        '@CFAHubSharedBundle/Resources/public/js/highcharts-more.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        $(function() {
+            /* get the json data */
+            var chartData = [];
+            $.each($.parseJSON($('#customer-chart').attr('data-chart')), function(key, value) {
+                chartData.push([key, value]);
+            });
+
+            PieChart.chart(chartData);
+        });
+
+
+        var PieChart = {
+            chart: function(chartData) {
+                console.log(chartData);
+                $('#customer-chart').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        style: {
+                            fontSize: '12px',
+                            fontFamily: 'Verdana, sans-serif'
+                        },
+                        margin: [0, 0, 0, 0],
+                        spacingTop: 0,
+                        spacingBottom: 0,
+                        spacingLeft: 0,
+                        spacingRight: 0,
+                    },
+                    title: false,
+                    // tooltip: {
+                        // formatter: function() {
+                        //     return '<b>' + this.y + '</b> '
+                        // },
+                        // pointFormat: '{point.y} purchased; <b>{point.percentage:.1f}%</b>'
+                    // },
+                    legend: false,
+                    plotOptions: {
+                        pie: {
+                            size:'100%',
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                distance: -65,
+                                // format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                format: '{point.name}',
+                                color: 'white',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+                                    //width: 200
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'Menu Breakdown',
+                        data: chartData
+                    }],
+                    colors: ['#4572A7', '#AA4643', '#5F5F5F', '#80699B', '#3D96AE', '#DB843D', '#92A8CD', '#A47D7C', '#B5CA92'],
+                    credits: {
+                        enabled: false
+                    },
+                });
+            }
+        }
+    </script>
 {% endblock %}

@@ -22,23 +22,40 @@ class SalesController extends Controller
     /**
      * @Route("/", name="cfa_hub_marketing_sales_index")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $now    = new \DateTime("now");
-        $future = new \DateTime("+3 day");
+        $startDate = $request->request->get('startDate');
+        $endDate   = $request->request->get('endDate');
 
-        $em         = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('CFAHubSharedBundle:Sale');
-        $sales      = $repository->createQueryBuilder('s')
-            ->where('s.pickupDate >= :now')
-            ->andWhere('s.pickupDate < :futureTime')
-            ->setParameter('now', $now)
-            ->setParameter('futureTime', $future)
-            ->getQuery()
-            ->getResult();
+        $sales = null;
 
-        return $this->render('CFAHubMarketingBundle:Sales:index.html.twig', [
-            'sales' => $sales,
+        if ($startDate !== null && $endDate !== null) {
+            $startDate = new \DateTime($startDate);
+            $endDate   = new \DateTime($endDate);
+
+            $em         = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('CFAHubSharedBundle:Sale');
+            $sales      = $repository->createQueryBuilder('s')
+                ->where('s.pickupDate >= :startDate')
+                ->andWhere('s.pickupDate <= :endDate')
+                ->setParameter('startDate', $startDate)
+                ->setParameter('endDate', $endDate)
+                ->orderBy('s.pickupDate', 'asc')
+                ->orderBy('s.pickupTime', 'asc')
+                ->getQuery()
+                ->getResult();
+        }
+
+        if ($startDate > $endDate) {
+            $this->addFlash('error', 'End date must be after start date.');
+            $startDate = null;
+            $endDate   = null;
+        }
+
+        return $this->render('CFAHubMarketingBundle:Sales:search.html.twig', [
+            'sales'      => $sales,
+            'start_date' => $startDate,
+            'end_date'   => $endDate,
         ]);
     }
 
@@ -49,11 +66,13 @@ class SalesController extends Controller
     {
         $orderForm    = $this->createForm('cfa_marketing_order');
         $customerForm = $this->createForm('cfa_customer', $sale->getCustomer());
+        $saleForm     = $this->createForm('cfa_marketing_sale');
 
         return $this->render('CFAHubMarketingBundle:Sales:show.html.twig', [
             'sale'          => $sale,
             'order_form'    => $orderForm->createView(),
             'customer_form' => $customerForm->createView(),
+            'sale_form'     => $saleForm->createView(),
         ]);
     }
 
@@ -107,7 +126,7 @@ class SalesController extends Controller
         $order = new Order();
         $order->setProduct($product);
         $order->setQty($parameters['qty']);
-        $order->setSpecialRequest($parameters['specialRequest']);
+        $order->setSpecialRequest(($parameters['specialRequest'] == "" ? null : $parameters['specialRequest']));
         $order->setSale($sale);
 
         /* validate */
@@ -129,17 +148,38 @@ class SalesController extends Controller
         $em->persist($order);
         $em->flush();
 
+        /* generate url to remove order from sale */
+        $removeOrderUrl = $this->generateUrl('cfa_hub_marketing_sales_remove_from_sale', [
+            'sale'  => $sale->getId(),
+            'order' => $order->getId(),
+        ]);
+
         return new JsonResponse([
             'success' => true,
             'data'    => [
-                // 'parameters' => $parameters,
-                'productName'  => (string)$order->getProduct(),
-                'productPrice' => $order->getProduct()->getPrice(),
-                'qty'          => $order->getQty(),
-                'total'        => $order->getProduct()->getPrice() * $order->getQty(),
-                'comments'     => $order->getSpecialRequest(),
+                'productName'    => (string)$order->getProduct(),
+                'productPrice'   => $order->getProduct()->getPrice(),
+                'qty'            => $order->getQty(),
+                'total'          => $order->getProduct()->getPrice() * $order->getQty(),
+                'comments'       => $order->getSpecialRequest(),
+                'removeOrderUrl' => $removeOrderUrl,
             ],
         ], 200);
+    }
+
+    /**
+     * @Route("/{sale}/{order}/remove-from-sale", name="cfa_hub_marketing_sales_remove_from_sale")
+     */
+    public function removeFromSaleAction(Sale $sale, Order $order)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($order);
+        $em->flush();
+
+        $this->addFlash('warning', 'Order removed from sale.');
+        return $this->redirectToRoute('cfa_hub_marketing_sales_show', [
+            'sale' => $sale->getId(),
+        ]);
     }
 
     /**
@@ -156,9 +196,7 @@ class SalesController extends Controller
         $repository = $em->getRepository('CFAHubSharedBundle:Customer');
         $customer   = $repository->findOneByPhone($parameters['phone']);
 
-        if ($customer) {
-            $this->addFlash('info', 'Customer was updated.');
-        } else {
+        if (! $customer) {
             $customer = new Customer();
         }
 
@@ -189,157 +227,66 @@ class SalesController extends Controller
 
         $em->flush();
 
+        $this->addFlash('success', 'Contact saved.');
+
         return $this->redirectToRoute('cfa_hub_marketing_sales_show', [
             'sale' => $sale->getId(),
         ]);
     }
 
-    // /**
-    //  * @Route("/{customer}/add", name="cfa_hub_marketing_sales_add")
-    //  */
-    // public function addSaleAction(Customer $customer, Request $request)
-    // {
-    //     $sale = new Sale();
-
-    //     $form = $this->createForm('cfa_sale', $sale);
-
-    //     $form->handleRequest($request);
-
-    //     if ($form->isValid()) {
-    //         $sale->setCustomer($customer);
-
-    //         $em = $this->getDoctrine()->getManager();
-    //         $em->persist($sale);
-
-    //         /* convert time */
-    //         $time = $sale->getPickupTime();
-    //         $time = new \DateTime($time);
-    //         $sale->setPickupTime($time);
-
-    //         /* add the orders */
-    //         foreach ($form['orders']->getData() as $order) {
-    //             $newOrder = new Order();
-    //             $newOrder->setCustomer($customer);
-    //             $newOrder->setProduct($order);
-    //             $newOrder->setSale($sale);
-
-    //             $newOrder->setQty($request->request->get('orders_'.$order->getId().'_qty'));
-
-    //             $specialRequest = ($request->request->get('orders_'.$order->getId().'_special') == "" ? null : $request->request->get('orders_'.$order->getId().'_special'));
-    //             $newOrder->setSpecialRequest($specialRequest);
-
-    //             $em->persist($newOrder);
-    //         }
-
-    //         $em->flush();
-
-    //         $this->addFlash('success', 'Sale added');
-    //         return $this->redirectToRoute('cfa_hub_marketing_customer_show', [
-    //             'customer' => $customer->getId(),
-    //         ]);
-    //     }
-
-    //     return $this->render('CFAHubMarketingBundle:Sales:add.html.twig', [
-    //         'form'        => $form->createView(),
-    //         'customer'    => $customer,
-    //         'new_product' => new Product(),
-    //     ]);
-    // }
-
     /**
-     * @Route("/{customer}/{sale}/edit", name="cfa_hub_marketing_sales_edit")
+     * @Route("/{sale}/sale-details", name="cfa_hub_marketing_sales_sale_details")
      */
-    public function editSaleAction(Customer $customer, Sale $sale, Request $request)
+    public function saleDetailsAction(Sale $sale, Request $request)
     {
-        $sale->setPickupTime($sale->getPickupTime()->format('h:i A'));
+        $validator = $this->get('validator');
 
-        $form = $this->createForm('cfa_sale', $sale);
+        $parameters = $request->request->get('cfa_marketing_sale');
 
-        $form->handleRequest($request);
+        $pickupDate = new \DateTime($parameters['pickupDate']);
+        $pickupTime = new \DateTime($parameters['pickupTime']);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        $sale->setPickupDate($pickupDate);
+        $sale->setPickupTime($pickupTime);
+        $sale->setComments($parameters['comments']);
 
-            /* remove existing orders */
-            foreach ($sale->getOrders() as $order) {
-                $em->remove($order);
-            }
-            $em->flush();
+        $errors = $validator->validate($sale);
 
-            /* convert time */
-            $time = $sale->getPickupTime();
-            $time = new \DateTime($time);
-            $sale->setPickupTime($time);
+        if (count($errors)) {
+            $errorStrings = [];
 
-            /* add the orders */
-            foreach ($form['orders']->getData() as $order) {
-                $newOrder = new Order();
-                $newOrder->setCustomer($customer);
-                $newOrder->setProduct($order);
-                $newOrder->setSale($sale);
-
-                $newOrder->setQty($request->request->get('orders_'.$order->getId().'_qty'));
-
-                $specialRequest = ($request->request->get('orders_'.$order->getId().'_special') == "" ? null : $request->request->get('orders_'.$order->getId().'_special'));
-                $newOrder->setSpecialRequest($specialRequest);
-
-                $em->persist($newOrder);
+            foreach ($errors as $error) {
+                $errorStrings[] = $error->getMessage();
             }
 
-            $em->flush();
+            $this->addFlash('error', implode(", ", $errorStrings));
 
-            $this->addFlash('success', 'Sale saved.');
-            return $this->redirectToRoute('cfa_hub_marketing_customer_show', [
-                'customer' => $customer->getId(),
+            return $this->redirectToRoute('cfa_hub_marketing_sales_show', [
+                'sale' => $sale->getId(),
             ]);
         }
 
-        return $this->render('CFAHubMarketingBundle:Sales:add.html.twig', [
-            'form'        => $form->createView(),
-            'customer'    => $customer,
-            'new_product' => new Product(),
-            'sale'        => $sale,
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        $this->addFlash('success', 'Sale details saved.');
+
+        return $this->redirectToRoute('cfa_hub_marketing_sales_show', [
+            'sale' => $sale->getId(),
         ]);
     }
 
-    // /**
-    //  * @Route("/{sale}/show", name="cfa_hub_marketing_sales_show")
-    //  */
-    // public function showAction(Sale $sale)
-    // {
-    //     return $this->render('CFAHubMarketingBundle:Sales:show.html.twig', [
-    //         'sale' => $sale,
-    //     ]);
-    // }
-
     /**
-     * @Route("/search-date", name="cfa_hub_marketing_sales_date_search")
+     * @Route("/{sale}/remove", name="cfa_hub_marketing_sales_remove")
      */
-    public function dateSearchAction()
+    public function removeAction(Sale $sale)
     {
-        $startDate = $this->get('request')->request->get('startDate');
-        $endDate   = $this->get('request')->request->get('endDate');
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($sale);
+        $em->flush();
 
-        $startDate = new \DateTime($startDate);
-        $endDate   = new \DateTime($endDate);
-
-        $em         = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('CFAHubSharedBundle:Sale');
-        $sales      = $repository->createQueryBuilder('s')
-            ->where('s.pickupDate >= :startDate')
-            ->andWhere('s.pickupDate <= :endDate')
-            ->setParameter('startDate', $startDate)
-            ->setParameter('endDate', $endDate)
-            ->orderBy('s.pickupDate', 'asc')
-            ->orderBy('s.pickupTime', 'asc')
-            ->getQuery()
-            ->getResult();
-
-        return $this->render('CFAHubMarketingBundle:Sales:search.html.twig', [
-            'sales'      => $sales,
-            'start_date' => $startDate,
-            'end_date'   => $endDate,
-        ]);
+        $this->addFlash('warning', 'Sale removed.');
+        return $this->redirectToRoute('cfa_hub_marketing_index');
     }
 
     /**

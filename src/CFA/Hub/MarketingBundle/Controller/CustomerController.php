@@ -20,12 +20,23 @@ class CustomerController extends Controller
      */
     public function indexAction()
     {
-        $em         = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('CFAHubSharedBundle:Customer');
-        $customers  = $repository->findAll();
+        $em              = $this->getDoctrine()->getManager();
+        $repository      = $em->getRepository('CFAHubSharedBundle:Customer');
+        $personCustomers = $repository->createQueryBuilder('c')
+            ->where('c.companyName IS NULL')
+            ->orderBy('c.lastName', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $companyCustomers = $repository->createQueryBuilder('c')
+            ->where('c.companyName IS NOT NULL')
+            ->orderBy('c.companyName', 'ASC')
+            ->getQuery()
+            ->getResult();
 
         return $this->render('CFAHubMarketingBundle:Customer:index.html.twig', [
-            'customers' => $customers,
+            'person_customers'  => $personCustomers,
+            'company_customers' => $companyCustomers,
         ]);
     }
 

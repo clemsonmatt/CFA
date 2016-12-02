@@ -58,12 +58,12 @@ class Sale
     private $pickupDate;
 
     /**
-     * @ORM\Column(name="pickup_time", type="datetime", length=255, nullable=true)
+     * @ORM\Column(name="pickup_time", type="time", length=255, nullable=true)
      */
     private $pickupTime;
 
     /**
-     * @ORM\OneToMany(targetEntity="CFA\Hub\SharedBundle\Entity\Order", mappedBy="sale")
+     * @ORM\OneToMany(targetEntity="CFA\Hub\SharedBundle\Entity\Order", mappedBy="sale", orphanRemoval=true)
      */
     private $orders;
 

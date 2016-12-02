@@ -57,6 +57,12 @@
                     <div class="col-sm-6">
                         <h4>About</h4>
                         <table class="table table-striped table-bordered">
+                            {% if customer.companyName %}
+                                <tr>
+                                    <th>Company</th>
+                                    <td>{{ customer.companyName }}</td>
+                                </tr>
+                            {% endif %}
                             <tr>
                                 <th>First Name</th>
                                 <td>{{ customer.firstName }}</td>
