@@ -25,6 +25,10 @@ class Customer
 
     public function __toString()
     {
+        if ($this->companyName) {
+            return $this->companyName;
+        }
+
         return $this->firstName.' '.$this->lastName;
     }
 

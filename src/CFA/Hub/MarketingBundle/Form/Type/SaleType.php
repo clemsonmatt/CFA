@@ -12,25 +12,12 @@ use CFA\Hub\SharedBundle\Entity\Sale;
 
 /**
  * @DI\Service("cfa.marketing.form.type.sale")
- * @DI\Tag("form.type", attributes={ "alias" = "cfa_sale" })
+ * @DI\Tag("form.type", attributes={ "alias" = "cfa_marketing_sale" })
  */
 class SaleType extends AbstractType
 {
     public function buildForm (FormBuilderInterface $builder, array $options)
     {
-        $builder->add('orders', 'entity', [
-            'label'    => 'Order',
-            'class'    => 'CFAHubSharedBundle:Product',
-            'required' => true,
-            'expanded' => true,
-            'multiple' => true,
-            'mapped'   => false,
-            'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('p')
-                    ->orderBy('p.category', 'asc');
-            },
-        ]);
-
         $builder->add('comments', 'textarea', [
             'label'    => 'Comments',
             'required' => false,
@@ -48,6 +35,7 @@ class SaleType extends AbstractType
             'attr'     => [
                 'class'            => 'datepicker',
                 'data-date-format' => 'mm/dd/yyyy',
+                'placeholder'      => 'Pickup Date',
             ],
         ]);
 
@@ -55,7 +43,8 @@ class SaleType extends AbstractType
             'label'    => 'Pickup Time',
             'required' => false,
             'attr'     => [
-                'class' => 'timepicker',
+                'class'       => 'timepicker',
+                'placeholder' => 'Pickup Time',
             ],
         ]);
     }
@@ -69,6 +58,6 @@ class SaleType extends AbstractType
 
     public function getName ()
     {
-        return 'cfa_sale';
+        return 'cfa_marketing_sale';
     }
 }

@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="icon" type="image/ico" href="{{ asset('bundles/cfahubshared/images/favicon.ico') }}"/>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/ico" href="{{ asset('bundles/cfahubshared/images/favicon.ico') }}"/>
 
-        <title>{% block title %}CFA Hub{% endblock %}</title>
+    <title>{% block title %}CFA Hub{% endblock %}</title>
 
-        {% block stylesheets %}
-            <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-            {% stylesheets
-                '@CFAHubSharedBundle/Resources/public/css/bootstrap/bootstrap.css'
-                '@CFAHubSharedBundle/Resources/public/css/bootstrap-datepicker/bootstrap-datepicker.css'
-                '@CFAHubSharedBundle/Resources/public/css/bootstrap-timepicker/bootstrap-timepicker.css'
-                '@CFAHubSharedBundle/Resources/public/css/sb-admin-custom.css'
-                '@CFAHubSharedBundle/Resources/public/css/custom.css'
-                '@CFAHubSharedBundle/Resources/public/css/calendar.css'
-            %}
-                <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
-        {% endblock %}
-    </head>
+    {% block stylesheets %}
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        {% stylesheets
+            '@CFAHubSharedBundle/Resources/public/css/bootstrap/bootstrap.css'
+            '@CFAHubSharedBundle/Resources/public/css/bootstrap-datepicker/bootstrap-datepicker.css'
+            '@CFAHubSharedBundle/Resources/public/css/bootstrap-timepicker/bootstrap-timepicker.css'
+            '@CFAHubSharedBundle/Resources/public/css/mainStructure.css'
+            '@CFAHubSharedBundle/Resources/public/css/nav.css'
+            '@CFAHubSharedBundle/Resources/public/css/custom.css'
+            '@CFAHubSharedBundle/Resources/public/css/calendar.css'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
 
-    <body>
-        {% block body %}
+        <style type="text/css">
+            @font-face {
+                font-family: "GeosansLight";
+                src: url("{{ asset('bundles/cfahubshared/fonts/GeosansLight.ttf') }}")
+            }
+            @font-face {
+                font-family: "LatoLight";
+                src: url("{{ asset('bundles/cfahubshared/fonts/Lato-Light.ttf') }}")
+            }
+            @font-face {
+                font-family: "LatoRegular";
+                src: url("{{ asset('bundles/cfahubshared/fonts/Lato-Regular.ttf') }}")
+            }
+        </style>
+    {% endblock %}
+</head>
+
+<body style="font-family: 'LatoRegular', sans-serif;">
+    {% block body %}
         <div id="wrapper">
             {# navigation #}
-            {#{% include 'CFAHubSharedBundle:Shared:nav.html.twig' %}#}
             {% embed "CFAHubSharedBundle:Shared:nav.html.twig" with {
                     page_title_content : block('page_title')|default('CFA Hub')
                 }
@@ -41,45 +56,40 @@
 
             {% block breadcrumb %}{% endblock %}
 
-            <div id="page-wrapper">
-                <div class="row">
-                    <div class="col-lg-12">
-                        {% set flashTypes = [ 'info', 'notice', 'warning', 'error', 'success'] %}
-                        {% set flashTypeMap = {
-                            'info'    : 'info',
-                            'warning' : 'warning',
-                            'error'   : 'danger',
-                            'success' : 'success',
-                        } %}
-                        {% set iconMap = {
-                            'info'    : 'info-circle',
-                            'warning' : 'exclamation-triangle',
-                            'error'   : 'exclamation-triangle',
-                            'success' : 'check',
-                        } %}
-                        {% set btnColormap = {
-                            'info'    : '3498db',
-                            'warning' : 'c79a18',
-                            'error'   : '480607',
-                            'success' : '064807',
-                        } %}
-                        {% for flashType in flashTypes %}
-                            {% for flashMessage in app.session.flashbag.get(flashType) %}
-                                <div class="hidden-print alert-cfa alert-cfa-{{ flashTypeMap[flashType] }} alert-dismissible" style="margin-top: 15px;">
-                                    <button type="button" class="close" data-dismiss="alert" style="margin-top: 1px;">
-                                        <span style="color: #{{ btnColormap[flashType] }}">&times;</span>
-                                    </button>
-                                    {{ icon(iconMap[flashType]) }}
-                                    <strong>
-                                        {{ flashMessage|raw }}
-                                    </strong>
-                                </div>
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
-                </div>
+            <div id="content">
+                {% set flashTypes = [ 'info', 'notice', 'warning', 'error', 'success'] %}
+                {% set flashTypeMap = {
+                    'info'    : 'info',
+                    'warning' : 'warning',
+                    'error'   : 'danger',
+                    'success' : 'success',
+                } %}
+                {% set iconMap = {
+                    'info'    : 'info-circle',
+                    'warning' : 'exclamation-triangle',
+                    'error'   : 'exclamation-triangle',
+                    'success' : 'check',
+                } %}
+                {% set btnColormap = {
+                    'info'    : '3498db',
+                    'warning' : 'c79a18',
+                    'error'   : '480607',
+                    'success' : '064807',
+                } %}
+                {% for flashType in flashTypes %}
+                    {% for flashMessage in app.session.flashbag.get(flashType) %}
+                        <div class="hidden-print alert-cfa alert-cfa-{{ flashTypeMap[flashType] }} alert-dismissible" style="margin-top: 15px;">
+                            <button type="button" class="close" data-dismiss="alert" style="margin-top: 1px;">
+                                <span style="color: #{{ btnColormap[flashType] }}">&times;</span>
+                            </button>
+                            {{ icon(iconMap[flashType]) }}
+                            <strong>
+                                {{ flashMessage|raw }}
+                            </strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
 
-                <br>
                 {% block page_info %}
                 {% endblock %}
 
@@ -89,39 +99,41 @@
                 </div>
             </div>
         </div>
-        {% endblock %}
+    {% endblock %}
 
-        {% block javascripts %}
+    {% block javascripts %}
 
-            {% javascripts
-                'bundles/cfahubshared/js/jquery-1.11.1.min.js'
-                'bundles/cfahubshared/js/lib/bootstrap/bootstrap.js'
-                'bundles/cfahubshared/js/lib/bootstrap-datepicker/bootstrap-datepicker.js'
-                'bundles/cfahubshared/js/lib/bootstrap-timepicker/bootstrap-timepicker.js'
-                'bundles/cfahubshared/js/custom.js'
-                'bundles/cfahubshared/js/calendar.js'
-            %}
-                <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+        {% javascripts
+            'bundles/cfahubshared/js/jquery-1.11.1.min.js'
+            'bundles/cfahubshared/js/lib/bootstrap/bootstrap.js'
+            'bundles/cfahubshared/js/lib/bootstrap-datepicker/bootstrap-datepicker.js'
+            'bundles/cfahubshared/js/lib/bootstrap-timepicker/bootstrap-timepicker.js'
+            'bundles/cfahubshared/js/custom.js'
+            'bundles/cfahubshared/js/calendar.js'
+        %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
 
-            <script>
-                /* timepicker */
-                $('.timepicker').timepicker({showInputs: false});
+        <script>
+            /* timepicker */
+            $('.timepicker').timepicker({showInputs: false});
 
-                /* datepicker */
-                $('.datepicker').datepicker({
-                    autoclose: true
-                });
+            /* datepicker */
+            $('.datepicker').datepicker({
+                autoclose: true
+            });
 
-                /* tooltip */
-                $('[data-toggle="tooltip"]').tooltip();
+            /* tooltip */
+            $('[data-toggle="tooltip"]').tooltip();
+            /* popover */
+            $('[data-toggle="popover"]').popover({'html': true});
 
-                /* clickable row */
-                $('.js-row-click').on('click', function(e) {
-                    window.location.href = $(this).attr('data-url');
-                })
-            </script>
+            /* clickable row */
+            $('.js-row-click').on('click', function(e) {
+                window.location.href = $(this).attr('data-url');
+            })
+        </script>
 
-        {% endblock %}
-    </body>
+    {% endblock %}
+</body>
 </html>
